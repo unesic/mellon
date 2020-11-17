@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Navigation from "./components/Navigation";
-import Homepage from "./pages/Homepage";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
+import Homepage from "./views/Homepage";
+import Register from "./views/Register";
+import Login from "./views/Login";
+import Logout from "./views/Logout";
 
 const App = () => {
 	return (

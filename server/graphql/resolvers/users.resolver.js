@@ -85,33 +85,33 @@ module.exports = {
 				token,
 			};
 		},
-	},
-	login: async (_, { email, password }) => {
-		const { errors, valid } = validateLoginInput(email, password);
+		login: async (_, { email, password }) => {
+			const { errors, valid } = validateLoginInput(email, password);
 
-		if (!valid) {
-			throw new UserInputError("Errors", { errors });
-		}
+			if (!valid) {
+				throw new UserInputError("Errors", { errors });
+			}
 
-		const user = await Users.findOne({ email });
+			const user = await Users.findOne({ email });
 
-		if (!user) {
-			errors.general = "User not found";
-			throw new UserInputError("User not found", { errors });
-		}
+			if (!user) {
+				errors.general = "User not found";
+				throw new UserInputError("User not found", { errors });
+			}
 
-		const match = await bcrypt.compare(password, user.password);
-		if (!match) {
-			errors.general = "Wrong credentials";
-			throw new UserInputError("Wrong credentials", { errors });
-		}
+			const match = await bcrypt.compare(password, user.password);
+			if (!match) {
+				errors.general = "Wrong credentials";
+				throw new UserInputError("Wrong credentials", { errors });
+			}
 
-		const token = generateToken(user);
+			const token = generateToken(user);
 
-		return {
-			...user._doc,
-			id: user._id,
-			token,
-		};
+			return {
+				...user._doc,
+				id: user._id,
+				token,
+			};
+		},
 	},
 };

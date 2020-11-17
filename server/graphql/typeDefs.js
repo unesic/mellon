@@ -47,26 +47,43 @@ module.exports = gql`
 
 		getDays: [Day]
 		getDay(dayId: ID!): Day!
-		
+
 		getLogs: [Log]
 		getLog(logId: ID!): Log!
-		
+
 		getLogTypes: [LogType]
 		getLogType(typeId: ID!): LogType!
-		
+
 		getLogSubTypes: [LogSubType]
 		getLogSubType(subtypeId: ID!): LogSubType
 	}
 
 	type Mutation {
-		register(email: String! password: String! rePassword: String! name: String! image: String!): User!
+		register(
+			email: String!
+			password: String!
+			rePassword: String!
+			name: String!
+			image: String!
+		): User!
 		login(email: String!, password: String!): User!
 
 		createDay(date: String!): Day!
 		deleteDay(dayId: ID!): String!
 
-		createLog(dayId: ID!, typeId: ID!, subtypeId: ID!, additional: String, timestamp: String!): Log!
-		updateLog(typeId: String, subtypeId: String, additional: String, timestamp: String): Log!
+		createLog(
+			dayId: ID!
+			typeId: ID!
+			subtypeId: ID!
+			additional: String
+			timestamp: String!
+		): Log!
+		updateLog(
+			typeId: String
+			subtypeId: String
+			additional: String
+			timestamp: String
+		): Log!
 		deleteLog(logId: ID!): String!
 
 		createLogType(name: String!): LogType!
