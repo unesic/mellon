@@ -4,6 +4,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
+import { AuthProvider } from "./lib/AuthContext";
 import App from "./App";
 
 const client = new ApolloClient({
@@ -14,7 +15,9 @@ const client = new ApolloClient({
 ReactDOM.render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
-			<App />
+			<AuthProvider>
+				<App />
+			</AuthProvider>
 		</ApolloProvider>
 	</React.StrictMode>,
 	document.getElementById("root")

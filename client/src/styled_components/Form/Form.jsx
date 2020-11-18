@@ -50,7 +50,7 @@ export const Input = ({
 	value,
 	label,
 	withLabel = true,
-	errors,
+	error,
 }) => {
 	return (
 		<>
@@ -63,11 +63,11 @@ export const Input = ({
 				type={type}
 				id={name}
 				name={name}
-				className={`${fc.Input} ${errors ? fc.InputHasErrors : ""}`}
+				className={`${fc.Input} ${error ? fc.InputHasErrors : ""}`}
 				onChange={onChange}
 				value={value}
 			/>
-			{errors ? <small className={fc.ErrorMsg}>{errors}</small> : null}
+			{error ? <small className={fc.ErrorMsg}>{error}</small> : null}
 		</>
 	);
 };

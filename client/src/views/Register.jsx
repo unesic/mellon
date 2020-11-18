@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 
-import userQueries from "../lib/userQueries";
+import { AuthContext } from "../lib/AuthContext";
+import { USER_REGISTER } from "../lib/userQueries";
+
 import {
 	FContainer,
 	Form,
@@ -11,7 +13,9 @@ import {
 } from "../styled_components/Form/Form";
 import Spinner from "../styled_components/Spinner";
 
-const Register = () => {
+const Register = ({ history, location }) => {
+	const context = useContext(AuthContext);
+
 	const [errors, setErrors] = useState({});
 	const [formFields, setFormFields] = useState({
 		name: "",
@@ -21,9 +25,11 @@ const Register = () => {
 		rePassword: "",
 	});
 
-	const [register, { loading }] = useMutation(userQueries.REGISTER, {
+	const [register, { loading }] = useMutation(USER_REGISTER, {
 		variables: { ...formFields },
-		onCompleted({ register }) {
+		onCompleted({ register: userData }) {
+			context.login(userData);
+
 			setFormFields({
 				name: "",
 				image: "",
@@ -32,7 +38,11 @@ const Register = () => {
 				rePassword: "",
 			});
 
-			// TODO: Set global user state
+			if (location.state && location.state.from.pathname !== "logout") {
+				history.push(location.state.from.pathname);
+			} else {
+				history.push("/");
+			}
 		},
 		onError(err) {
 			setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -77,7 +87,7 @@ const Register = () => {
 									onChange={onChangeHandler}
 									value={formFields.name}
 									label="Name"
-									errors={errors.name}
+									error={errors.name}
 								/>
 							</Fieldset>
 							<Fieldset>
@@ -87,7 +97,7 @@ const Register = () => {
 									onChange={onChangeHandler}
 									value={formFields.image}
 									label="Image"
-									errors={errors.image}
+									error={errors.image}
 								/>
 							</Fieldset>
 							<Fieldset>
@@ -97,7 +107,7 @@ const Register = () => {
 									onChange={onChangeHandler}
 									value={formFields.email}
 									label="Email"
-									errors={errors.email}
+									error={errors.email}
 								/>
 							</Fieldset>
 							<Fieldset>
@@ -107,7 +117,7 @@ const Register = () => {
 									label="Password"
 									onChange={onChangeHandler}
 									value={formFields.password}
-									errors={errors.password}
+									error={errors.password}
 								/>
 							</Fieldset>
 							<Fieldset>
@@ -117,7 +127,7 @@ const Register = () => {
 									label="Re-type Password"
 									onChange={onChangeHandler}
 									value={formFields.rePassword}
-									errors={errors.rePassword}
+									error={errors.rePassword}
 								/>
 							</Fieldset>
 							<Submit>Register</Submit>

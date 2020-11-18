@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 
-import userQueries from "../lib/userQueries";
+import { AuthContext } from "../lib/AuthContext";
+import { USER_LOGIN } from "../lib/userQueries";
+
 import {
 	FContainer,
 	Form,
@@ -11,22 +13,30 @@ import {
 } from "../styled_components/Form/Form";
 import Spinner from "../styled_components/Spinner";
 
-const Login = () => {
+const Login = ({ history, location }) => {
+	const context = useContext(AuthContext);
+
 	const [errors, setErrors] = useState({});
 	const [formFields, setFormFields] = useState({
 		email: "",
 		password: "",
 	});
 
-	const [login, { loading }] = useMutation(userQueries.LOGIN, {
+	const [login, { loading }] = useMutation(USER_LOGIN, {
 		variables: { ...formFields },
-		onCompleted({ login }) {
+		onCompleted({ login: userData }) {
+			context.login(userData);
+
 			setFormFields({
 				email: "",
 				password: "",
 			});
 
-			// TODO: Set global user state
+			if (location.state && location.state.from.pathname !== "logout") {
+				history.push(location.state.from.pathname);
+			} else {
+				history.push("/");
+			}
 		},
 		onError(err) {
 			setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -71,7 +81,7 @@ const Login = () => {
 									onChange={onChangeHandler}
 									value={formFields.email}
 									label="Email"
-									errors={errors.email}
+									error={errors.email}
 								/>
 							</Fieldset>
 							<Fieldset>
@@ -81,7 +91,7 @@ const Login = () => {
 									label="Password"
 									onChange={onChangeHandler}
 									value={formFields.password}
-									errors={errors.password}
+									error={errors.password}
 								/>
 							</Fieldset>
 							<Submit>Log In</Submit>

@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 
 dotenv.config();
 
-require("./util/arrRemove");
-const typeDefs = require("./graphql/typeDefs");
-const resolvers = require("./graphql/resolvers");
+require("./src/util/arrRemove");
+const typeDefs = require("./src/graphql/typeDefs");
+const resolvers = require("./src/graphql/resolvers");
 
 const server = new ApolloServer({
 	typeDefs,
