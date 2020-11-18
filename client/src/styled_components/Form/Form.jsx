@@ -48,6 +48,7 @@ export const Input = ({
 	name,
 	onChange,
 	value,
+	placeholder,
 	label,
 	withLabel = true,
 	error,
@@ -66,6 +67,7 @@ export const Input = ({
 				className={`${fc.Input} ${error ? fc.InputHasErrors : ""}`}
 				onChange={onChange}
 				value={value}
+				placeholder={placeholder}
 			/>
 			{error ? <small className={fc.ErrorMsg}>{error}</small> : null}
 		</>

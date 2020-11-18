@@ -67,6 +67,14 @@ module.exports = gql`
 			image: String!
 		): User!
 		login(email: String!, password: String!): User!
+		update(
+			id: ID!
+			email: String
+			password: String
+			rePassword: String
+			name: String
+			image: String
+		): User!
 
 		createDay(date: String!): Day!
 		deleteDay(dayId: ID!): String!

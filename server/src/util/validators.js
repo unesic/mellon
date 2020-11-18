@@ -1,5 +1,3 @@
-const { replaceOne } = require("../models/Users.model");
-
 module.exports.validateRegisterInput = (
 	email,
 	password,
@@ -56,6 +54,28 @@ module.exports.validateLoginInput = (email, password) => {
 
 	if (password === "") {
 		errors.password = "Password must not be empty";
+	}
+
+	return {
+		errors,
+		valid: Object.keys(errors).length < 1,
+	};
+};
+
+module.exports.validateUpdateInput = (
+	email = "",
+	password = "",
+	rePassword = ""
+) => {
+	const errors = {};
+
+	const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+	if (email.trim() !== "" && !email.match(regEx)) {
+		errors.email = "Email must be a valid email address";
+	}
+
+	if (password !== rePassword) {
+		errors.rePassword = "Passwords must match";
 	}
 
 	return {

@@ -5,6 +5,7 @@ const { UserInputError } = require("apollo-server");
 const {
 	validateRegisterInput,
 	validateLoginInput,
+	validateUpdateInput,
 } = require("../../util/validators");
 const Users = require("../../models/Users.model");
 
@@ -110,6 +111,52 @@ module.exports = {
 			return {
 				...user._doc,
 				id: user._id,
+				token,
+			};
+		},
+		update: async (_, { id, email, password, rePassword, name, image }) => {
+			const { valid, errors } = validateUpdateInput(
+				email,
+				password,
+				rePassword
+			);
+
+			if (!valid) {
+				throw new UserInputError("Errors", { errors });
+			}
+
+			const user = await Users.findOne({ email });
+
+			if (user && user.id !== id) {
+				throw new UserInputError("Email is taken", {
+					errors: {
+						email: "This email is taken",
+					},
+				});
+			}
+
+			const currUser = await Users.findById(id);
+
+			if (password) {
+				password = await bcrypt.hash(password, 12);
+			}
+
+			const res = await Users.findByIdAndUpdate(
+				id,
+				{
+					email: email || currUser.email,
+					password: password || currUser.password,
+					name: name || currUser.name,
+					image: image || currUser.image,
+				},
+				{ new: true }
+			);
+
+			const token = generateToken(res);
+
+			return {
+				...res._doc,
+				id: res._id,
 				token,
 			};
 		},

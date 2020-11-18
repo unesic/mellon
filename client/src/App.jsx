@@ -17,7 +17,7 @@ const App = () => {
 			<nav className="w-64">
 				<Navigation />
 			</nav>
-			<main className="flex-grow">
+			<main className="flex-grow p-3">
 				<Switch>
 					<Route exact path="/" component={Homepage} />
 					<PublicRoute path="/register" component={Register} />
