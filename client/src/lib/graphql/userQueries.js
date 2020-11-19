@@ -18,7 +18,7 @@ const USER_REGISTER = gql`
 		$password: String!
 		$rePassword: String!
 		$name: String!
-		$image: String!
+		$image: ID!
 	) {
 		register(
 			email: $email
@@ -43,7 +43,7 @@ const USER_UPDATE = gql`
 		$password: String!
 		$rePassword: String!
 		$name: String!
-		$image: String!
+		$image: ID!
 	) {
 		update(
 			id: $id

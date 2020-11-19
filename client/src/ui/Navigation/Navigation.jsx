@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { FaSeedling, FaUser } from "react-icons/fa";
 
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../../lib/AuthContext";
 
 import classes from "./Navigation.classes";
 

@@ -10,7 +10,10 @@ const usersSchema = new Schema(
 		email: requiredString,
 		password: requiredString,
 		name: requiredString,
-		image: requiredString,
+		image: {
+			type: Schema.Types.ObjectId,
+			ref: "Files",
+		},
 		days: {
 			type: [Schema.Types.ObjectId],
 			ref: "Days",

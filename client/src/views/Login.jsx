@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 
 import { AuthContext } from "../lib/AuthContext";
-import { USER_LOGIN } from "../lib/userQueries";
+import { USER_LOGIN } from "../lib/graphql/userQueries";
 
 import {
 	FContainer,
@@ -10,8 +10,9 @@ import {
 	Fieldset,
 	Input,
 	Submit,
-} from "../styled_components/Form/Form";
-import Spinner from "../styled_components/Spinner";
+	FormTitle,
+} from "../ui/Form/Form";
+import Spinner from "../ui/Spinner";
 
 const Login = ({ history, location }) => {
 	const context = useContext(AuthContext);
@@ -56,49 +57,38 @@ const Login = ({ history, location }) => {
 	};
 
 	return (
-		<div className={["p-3", "h-full"].join(" ")}>
-			<div className={["pt-16"].join(" ")}>
-				<h2
-					className={[
-						"text-center",
-						"font-semibold",
-						"text-3xl",
-						"mb-5",
-					].join(" ")}
-				>
-					Log In
-				</h2>
+		<div className="h-full">
+			<FormTitle>Log In</FormTitle>
 
-				{loading ? (
-					<Spinner />
-				) : (
-					<FContainer formType="login">
-						<Form onSubmit={onSubmitHandler}>
-							<Fieldset>
-								<Input
-									type="text"
-									name="email"
-									onChange={onChangeHandler}
-									value={formFields.email}
-									label="Email"
-									error={errors.email}
-								/>
-							</Fieldset>
-							<Fieldset>
-								<Input
-									type="password"
-									name="password"
-									label="Password"
-									onChange={onChangeHandler}
-									value={formFields.password}
-									error={errors.password}
-								/>
-							</Fieldset>
-							<Submit>Log In</Submit>
-						</Form>
-					</FContainer>
-				)}
-			</div>
+			{loading ? (
+				<Spinner />
+			) : (
+				<FContainer formType="login">
+					<Form onSubmit={onSubmitHandler}>
+						<Fieldset>
+							<Input
+								type="text"
+								name="email"
+								onChange={onChangeHandler}
+								value={formFields.email}
+								label="Email"
+								error={errors.email}
+							/>
+						</Fieldset>
+						<Fieldset>
+							<Input
+								type="password"
+								name="password"
+								label="Password"
+								onChange={onChangeHandler}
+								value={formFields.password}
+								error={errors.password}
+							/>
+						</Fieldset>
+						<Submit>Log In</Submit>
+					</Form>
+				</FContainer>
+			)}
 		</div>
 	);
 };

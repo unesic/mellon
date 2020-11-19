@@ -3,6 +3,7 @@ const daysResolver = require("./days.resolver");
 const logsResolver = require("./logs.resolver");
 const logTypesResolver = require("./logTypes.resolver");
 const logSubTypesResolver = require("./logSubTypes.resolver");
+const filesResolver = require("./files.resolver");
 
 module.exports = {
 	Query: {
@@ -11,6 +12,7 @@ module.exports = {
 		...logsResolver.Query,
 		...logTypesResolver.Query,
 		...logSubTypesResolver.Query,
+		...filesResolver.Query,
 	},
 	Mutation: {
 		...usersResolvers.Mutation,
@@ -18,5 +20,6 @@ module.exports = {
 		...logsResolver.Mutation,
 		...logTypesResolver.Mutation,
 		...logSubTypesResolver.Mutation,
+		...filesResolver.Mutation,
 	},
 };

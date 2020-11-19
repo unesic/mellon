@@ -1,6 +1,11 @@
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer } = require("apollo-server-express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
+
+const app = express();
 
 dotenv.config();
 
@@ -14,14 +19,17 @@ const server = new ApolloServer({
 	context: ({ req }) => ({ req }),
 });
 
+const dir = path.join(process.cwd(), "images");
+app.use("/images", express.static(dir));
+app.use(cors("*"));
+
+server.applyMiddleware({ app })
+
 mongoose
 	.connect(process.env.MONGO_DB, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
 	.then(() => {
-		return server.listen({ port: process.env.PORT || 5000 });
+		return app.listen(process.env.PORT || 5000);
 	})
-	.then((res) => {
-		console.log(`Server running on ${res.url}`);
-	});

@@ -43,6 +43,18 @@ export const Fieldset = ({ children }) => {
 	return <fieldset className={fc.Fieldset}>{children}</fieldset>;
 };
 
+export const Label = ({ htmlFor, children }) => {
+	return (
+		<label htmlFor={htmlFor} className={fc.Label}>
+			{children}
+		</label>
+	);
+};
+
+export const Error = ({ children }) => {
+	return <small className={fc.ErrorMsg}>{children}</small>;
+};
+
 export const Input = ({
 	type,
 	name,
@@ -55,11 +67,7 @@ export const Input = ({
 }) => {
 	return (
 		<>
-			{withLabel ? (
-				<label htmlFor={name} className={fc.Label}>
-					{label}
-				</label>
-			) : null}
+			{withLabel && <Label htmlFor={name}>{label}</Label>}
 			<input
 				type={type}
 				id={name}
@@ -69,7 +77,7 @@ export const Input = ({
 				value={value}
 				placeholder={placeholder}
 			/>
-			{error ? <small className={fc.ErrorMsg}>{error}</small> : null}
+			{error && <Error>{error}</Error>}
 		</>
 	);
 };
@@ -84,4 +92,8 @@ export const Submit = ({ children }) => {
 
 export const AdditionalText = ({ children }) => {
 	return <p className={fc.AdditionalText}>{children}</p>;
+};
+
+export const FormTitle = ({ children }) => {
+	return <h2 className={fc.Title}>{children}</h2>;
 };

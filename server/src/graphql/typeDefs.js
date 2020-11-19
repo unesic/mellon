@@ -1,6 +1,13 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
+	type File {
+		id: ID!
+		filename: String!
+		mimetype: String!
+		path: String!
+	}
+
 	type LogSubType {
 		id: ID!
 		userId: ID!
@@ -36,7 +43,7 @@ module.exports = gql`
 		id: ID!
 		email: String!
 		name: String!
-		image: String!
+		image: ID!
 		days: [ID]!
 		token: String!
 	}
@@ -56,6 +63,8 @@ module.exports = gql`
 
 		getLogSubTypes: [LogSubType]
 		getLogSubType(subtypeId: ID!): LogSubType
+
+		getFile(fileId: ID!): File!
 	}
 
 	type Mutation {
@@ -64,7 +73,7 @@ module.exports = gql`
 			password: String!
 			rePassword: String!
 			name: String!
-			image: String!
+			image: ID!
 		): User!
 		login(email: String!, password: String!): User!
 		update(
@@ -73,7 +82,7 @@ module.exports = gql`
 			password: String
 			rePassword: String
 			name: String
-			image: String
+			image: ID
 		): User!
 
 		createDay(date: String!): Day!
@@ -101,5 +110,7 @@ module.exports = gql`
 		createLogSubType(typeId: ID!, name: String!): LogSubType!
 		updateLogSubType(name: String!): LogSubType!
 		deleteLogSubType(subtypeId: ID!): String!
+
+		singleUpload(file: Upload!): File!
 	}
 `;

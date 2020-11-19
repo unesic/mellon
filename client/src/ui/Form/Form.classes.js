@@ -52,4 +52,12 @@ Classes.AdditionalTextLink = [
 	"hover:text-teal-500",
 ].join(" ");
 
+Classes.Title = [
+	"text-center",
+	"font-semibold",
+	"text-3xl",
+	"mb-5",
+	"pt-6",
+].join(" ");
+
 export default Classes;
