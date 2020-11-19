@@ -25,7 +25,6 @@ const processUpload = async (upload) => {
 module.exports = {
 	Query: {
 		getFile: async (_, { fileId }) => {
-			console.log(fileId);
 			try {
 				const file = await Files.findById(fileId);
 				if (file) {
