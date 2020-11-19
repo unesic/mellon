@@ -2,3 +2,5 @@
 */.env
 */.env.local
 */.editorconfig
+.DS_Store
+*/.DS_Store
