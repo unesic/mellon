@@ -83,3 +83,16 @@ module.exports.validateUpdateInput = (
 		valid: Object.keys(errors).length < 1,
 	};
 };
+
+module.exports.validateFileUpload = (mimetype) => {
+	const errors = {};
+
+	if (mimetype !== "image/png" && mimetype !== "image/jpeg") {
+		errors.image = "File format must be either PNG or JPEG";
+	}
+
+	return {
+		errors,
+		valid: Object.keys(errors).length < 1,
+	};
+};

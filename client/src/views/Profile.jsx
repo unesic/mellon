@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { AuthContext } from "../lib/AuthContext";
 import { USER_UPDATE } from "../lib/graphql/userQueries";
+import { FILE_UPLOAD } from "../lib/graphql/fileQueries";
 import ImageUpload from "../ui/ImageUpload/ImageUpload";
 
 import {
@@ -19,7 +20,8 @@ import Spinner from "../ui/Spinner";
 
 const Profile = ({ history, location }) => {
 	const context = useContext(AuthContext);
-	const [image, setImage] = useState({});
+	const [image, setImage] = useState(null);
+	const [submitable, setSubmitable] = useState({ img: false, fields: false });
 
 	const [errors, setErrors] = useState({});
 	const [formFields, setFormFields] = useState({
@@ -31,19 +33,24 @@ const Profile = ({ history, location }) => {
 	});
 
 	useEffect(() => {
-		setImage(context.image);
-	}, [context.image]);
+		!context.loading && setImage({ ...context.image });
+	}, [context.image, context.loading]);
 
 	useEffect(() => {
-		setFormFields({ ...formFields, image: image.id });
+		image && image.blob && setSubmitable({ ...submitable, img: true });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [image]);
 
+	useEffect(() => {
+		const filtered = Object.filter(formFields, (f) => f !== "");
+		setSubmitable({
+			...submitable,
+			fields: Object.keys(filtered).length > 0,
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formFields]);
+
 	const [update, { loading }] = useMutation(USER_UPDATE, {
-		variables: {
-			...formFields,
-			id: context.user.id,
-		},
 		onCompleted({ update: userData }) {
 			context.login(userData);
 
@@ -57,9 +64,26 @@ const Profile = ({ history, location }) => {
 
 			setErrors({});
 
+			setSubmitable({ img: false, fields: false });
+
 			if (location.state && location.state.from.pathname !== "logout") {
 				history.push(location.state.from.pathname);
 			}
+		},
+		onError(err) {
+			setErrors(err.graphQLErrors[0].extensions.exception.errors);
+		},
+	});
+
+	const [singleUpload] = useMutation(FILE_UPLOAD, {
+		async onCompleted({ singleUpload }) {
+			await update({
+				variables: {
+					...formFields,
+					id: context.user.id,
+					image: singleUpload.id,
+				},
+			});
 		},
 		onError(err) {
 			setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -75,7 +99,16 @@ const Profile = ({ history, location }) => {
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
-		await update();
+		if (image.file) {
+			await singleUpload({ variables: { file: image.file } });
+		} else {
+			await update({
+				variables: {
+					...formFields,
+					id: context.user.id,
+				},
+			});
+		}
 	};
 
 	return (
@@ -97,15 +130,24 @@ const Profile = ({ history, location }) => {
 								label="Name"
 							/>
 						</Fieldset>
+
 						<Fieldset>
 							<Label>Image</Label>
-							<ImageUpload
-								image={image}
-								setImage={setImage}
-								inputId="image"
-								hasError={errors.image}
-							/>
-							{errors.image && <Error>{errors.image}</Error>}
+							{context.loading ? (
+								<Spinner />
+							) : (
+								<>
+									<ImageUpload
+										image={image}
+										setImage={setImage}
+										inputId="image"
+										hasError={errors.image}
+									/>
+									{errors.image && (
+										<Error>{errors.image}</Error>
+									)}
+								</>
+							)}
 						</Fieldset>
 						<Fieldset>
 							<Input
@@ -138,7 +180,11 @@ const Profile = ({ history, location }) => {
 								error={errors.rePassword}
 							/>
 						</Fieldset>
-						<Submit>Update</Submit>
+						<Submit
+							submitable={submitable.img || submitable.fields}
+						>
+							Update
+						</Submit>
 					</Form>
 				</FContainer>
 			)}

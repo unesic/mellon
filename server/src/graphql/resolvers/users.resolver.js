@@ -9,7 +9,7 @@ const {
 } = require("../../util/validators");
 const Users = require("../../models/Users.model");
 
-const generateToken = (user) => {
+const generateToken = (user, remember) => {
 	return jwt.sign(
 		{
 			id: user._id,
@@ -18,7 +18,7 @@ const generateToken = (user) => {
 			image: user.image,
 		},
 		process.env.JWT_SECRET,
-		{ expiresIn: "1h" }
+		remember ? {} : { expiresIn: "1h" }
 	);
 };
 
@@ -86,7 +86,7 @@ module.exports = {
 				token,
 			};
 		},
-		login: async (_, { email, password }) => {
+		login: async (_, { email, password, remember }) => {
 			const { errors, valid } = validateLoginInput(email, password);
 
 			if (!valid) {
@@ -106,7 +106,7 @@ module.exports = {
 				throw new UserInputError("Wrong credentials", { errors });
 			}
 
-			const token = generateToken(user);
+			const token = generateToken(user, remember);
 
 			return {
 				...user._doc,

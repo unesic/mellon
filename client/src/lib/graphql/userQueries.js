@@ -1,17 +1,5 @@
 import gql from "graphql-tag";
 
-const USER_LOGIN = gql`
-	mutation login($email: String!, $password: String!) {
-		login(email: $email, password: $password) {
-			id
-			email
-			name
-			image
-			token
-		}
-	}
-`;
-
 const USER_REGISTER = gql`
 	mutation register(
 		$email: String!
@@ -27,6 +15,18 @@ const USER_REGISTER = gql`
 			name: $name
 			image: $image
 		) {
+			id
+			email
+			name
+			image
+			token
+		}
+	}
+`;
+
+const USER_LOGIN = gql`
+	mutation login($email: String!, $password: String!, $remember: Boolean!) {
+		login(email: $email, password: $password, remember: $remember) {
 			id
 			email
 			name

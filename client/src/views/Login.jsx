@@ -11,6 +11,7 @@ import {
 	Input,
 	Submit,
 	FormTitle,
+	Error,
 } from "../ui/Form/Form";
 import Spinner from "../ui/Spinner";
 
@@ -21,6 +22,7 @@ const Login = ({ history, location }) => {
 	const [formFields, setFormFields] = useState({
 		email: "",
 		password: "",
+		remember: false,
 	});
 
 	const [login, { loading }] = useMutation(USER_LOGIN, {
@@ -31,6 +33,7 @@ const Login = ({ history, location }) => {
 			setFormFields({
 				email: "",
 				password: "",
+				remember: false,
 			});
 
 			if (location.state && location.state.from.pathname !== "logout") {
@@ -47,7 +50,10 @@ const Login = ({ history, location }) => {
 	const onChangeHandler = (e) => {
 		setFormFields({
 			...formFields,
-			[e.target.name]: e.target.value,
+			[e.target.name]:
+				e.target.type === "checkbox"
+					? e.target.checked
+					: e.target.value,
 		});
 	};
 
@@ -64,7 +70,8 @@ const Login = ({ history, location }) => {
 				<Spinner />
 			) : (
 				<FContainer formType="login">
-					<Form onSubmit={onSubmitHandler}>
+					<Form onSubmit={onSubmitHandler} generalError={errors.general}>
+						{errors.general && <Error general>{errors.general}</Error>}
 						<Fieldset>
 							<Input
 								type="text"
@@ -83,6 +90,15 @@ const Login = ({ history, location }) => {
 								onChange={onChangeHandler}
 								value={formFields.password}
 								error={errors.password}
+							/>
+						</Fieldset>
+						<Fieldset>
+							<Input
+								type="checkbox"
+								name="remember"
+								label="Keep me signed in"
+								onChange={onChangeHandler}
+								value={formFields.remember}
 							/>
 						</Fieldset>
 						<Submit>Log In</Submit>

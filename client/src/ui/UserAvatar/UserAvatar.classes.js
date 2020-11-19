@@ -1,17 +1,5 @@
 const Classes = {};
 
-Classes.container = [
-	"relative",
-	"p-2",
-	"border",
-	"border-solid",
-	"border-gray-300",
-	"rounded",
-	"flex",
-	"justify-center",
-	"items-center",
-].join(" ");
-
 Classes.base = [
 	"rounded-full",
 	"border-solid",
@@ -19,7 +7,10 @@ Classes.base = [
 	"bg-teal-200",
 	"object-cover",
 	"object-center",
+	"shadow-md",
 ].join(" ");
+
+Classes.xs = ["w-10", "border-2"].join(" ");
 
 Classes.sm = ["w-16", "border-2"].join(" ");
 

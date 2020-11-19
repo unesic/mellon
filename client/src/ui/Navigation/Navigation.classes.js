@@ -51,4 +51,6 @@ Classes.navLink = [
 
 Classes.navLinkActive = ["text-teal-400"].join(" ");
 
+Classes.username = ["pl-2"].join(" ");
+
 export default Classes;

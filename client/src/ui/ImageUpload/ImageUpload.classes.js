@@ -1,5 +1,18 @@
 const Classes = {};
 
+Classes.container = [
+	"relative",
+	"p-2",
+	"bg-white",
+	"border",
+	"border-solid",
+	"border-gray-300",
+	"rounded",
+	"flex",
+	"justify-center",
+	"items-center",
+].join(" ");
+
 Classes.overlay = [
 	"flex",
 	"justify-center",

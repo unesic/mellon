@@ -1,6 +1,8 @@
+const { UserInputError } = require("apollo-server");
 const shortid = require("shortid");
 const { createWriteStream, mkdir } = require("fs");
 
+const { validateFileUpload } = require("../../util/validators");
 const Files = require("../../models/Files.model");
 
 const storeUpload = async ({ stream, filename, mimetype }) => {
@@ -16,6 +18,13 @@ const storeUpload = async ({ stream, filename, mimetype }) => {
 };
 const processUpload = async (upload) => {
 	const { createReadStream, filename, mimetype } = await upload;
+
+	const { errors, valid } = validateFileUpload(mimetype);
+
+	if (!valid) {
+		throw new UserInputError("Errors", { errors });
+	}
+
 	const stream = createReadStream();
 	const file = await storeUpload({ stream, filename, mimetype });
 

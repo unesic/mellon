@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
 import fc from "./Form.classes";
 
@@ -31,9 +32,16 @@ export const FContainer = ({ formType = "", children }) => {
 	);
 };
 
-export const Form = ({ onSubmit, children }) => {
+export const FormTitle = ({ children }) => {
+	return <h2 className={fc.Title}>{children}</h2>;
+};
+
+export const Form = ({ generalError = false, onSubmit, children }) => {
 	return (
-		<form className={fc.Form} onSubmit={onSubmit}>
+		<form
+			className={generalError ? fc.FormGeneralError : fc.Form}
+			onSubmit={onSubmit}
+		>
 			{children}
 		</form>
 	);
@@ -43,16 +51,40 @@ export const Fieldset = ({ children }) => {
 	return <fieldset className={fc.Fieldset}>{children}</fieldset>;
 };
 
-export const Label = ({ htmlFor, children }) => {
+export const Label = ({
+	htmlFor,
+	checkbox = { type: "", value: "" },
+	children,
+}) => {
 	return (
-		<label htmlFor={htmlFor} className={fc.Label}>
+		<label
+			htmlFor={htmlFor}
+			className={`${fc.Label} ${checkbox && fc.CheckboxLabel}`}
+		>
+			{checkbox.type === "checkbox" && (
+				<span
+					className={`${fc.CheckboxIcon} ${
+						checkbox.value && fc.CheckboxIconChecked
+					}`}
+				>
+					{checkbox.value ? (
+						<ImCheckboxChecked />
+					) : (
+						<ImCheckboxUnchecked />
+					)}
+				</span>
+			)}
 			{children}
 		</label>
 	);
 };
 
-export const Error = ({ children }) => {
-	return <small className={fc.ErrorMsg}>{children}</small>;
+export const Error = ({ general = false, children }) => {
+	return (
+		<small className={general ? fc.ErrorMsgGeneral : fc.ErrorMsg}>
+			{children}
+		</small>
+	);
 };
 
 export const Input = ({
@@ -67,7 +99,11 @@ export const Input = ({
 }) => {
 	return (
 		<>
-			{withLabel && <Label htmlFor={name}>{label}</Label>}
+			{withLabel && (
+				<Label htmlFor={name} checkbox={{ type, value }}>
+					{label}
+				</Label>
+			)}
 			<input
 				type={type}
 				id={name}
@@ -76,15 +112,20 @@ export const Input = ({
 				onChange={onChange}
 				value={value}
 				placeholder={placeholder}
+				style={{ display: type === "checkbox" && "none" }}
 			/>
 			{error && <Error>{error}</Error>}
 		</>
 	);
 };
 
-export const Submit = ({ children }) => {
+export const Submit = ({ submitable = true, children }) => {
 	return (
-		<button type="submit" className={fc.Button}>
+		<button
+			type="submit"
+			className={submitable ? fc.Button : fc.ButtonDisabled}
+			disabled={!submitable}
+		>
 			{children}
 		</button>
 	);
@@ -92,8 +133,4 @@ export const Submit = ({ children }) => {
 
 export const AdditionalText = ({ children }) => {
 	return <p className={fc.AdditionalText}>{children}</p>;
-};
-
-export const FormTitle = ({ children }) => {
-	return <h2 className={fc.Title}>{children}</h2>;
 };

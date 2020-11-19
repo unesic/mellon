@@ -75,7 +75,7 @@ module.exports = gql`
 			name: String!
 			image: ID!
 		): User!
-		login(email: String!, password: String!): User!
+		login(email: String!, password: String!, remember: Boolean!): User!
 		update(
 			id: ID!
 			email: String

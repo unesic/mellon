@@ -3,6 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { FaSeedling, FaUser } from "react-icons/fa";
 
 import { AuthContext } from "../../lib/AuthContext";
+import UserAvatar from "../../ui/UserAvatar/UserAvatar";
 
 import classes from "./Navigation.classes";
 
@@ -31,8 +32,19 @@ const Navigation = () => {
 				</div>
 				<div className={classes.section}>
 					<header className={classes.header}>
-						<FaUser className={classes.headerIcon} />{" "}
-						{context.user ? context.user.name : "User"}
+						{context.image && context.image.filename ? (
+							<UserAvatar
+								src={`${process.env.REACT_APP_SERVER_URL}/${context.image.path}`}
+								alt={context.image.filename.split(".")[0]}
+								size="xs"
+							/>
+						) : (
+							<FaUser className={classes.headerIcon} />
+						)}
+
+						<span className={classes.username}>
+							{context.user ? context.user.name : "User"}
+						</span>
 					</header>
 
 					<div className={classes.links}>

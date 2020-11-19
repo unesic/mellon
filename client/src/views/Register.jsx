@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 
 import { AuthContext } from "../lib/AuthContext";
 import { USER_REGISTER } from "../lib/graphql/userQueries";
+import { FILE_UPLOAD } from "../lib/graphql/fileQueries";
 import ImageUpload from "../ui/ImageUpload/ImageUpload";
 
 import {
@@ -18,6 +19,7 @@ import {
 import Spinner from "../ui/Spinner";
 
 const Register = ({ history, location }) => {
+	const [submitable, setSubmitable] = useState({ img: false, fields: false });
 	const [image, setImage] = useState({
 		id: "",
 		filename: "",
@@ -36,12 +38,30 @@ const Register = ({ history, location }) => {
 	});
 
 	useEffect(() => {
-		setFormFields({ ...formFields, image: image.id });
+		setFormFields({ ...formFields, image: context.image.id });
+		setImage({ ...context.image });
+		setSubmitable({ ...submitable, img: true });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [context.image]);
+
+	useEffect(() => {
+		image &&
+			image.blob &&
+			setFormFields({ ...formFields, image: image.id });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [image]);
 
+	useEffect(() => {
+		const filtered = Object.filter(formFields, (f) => f !== "");
+		setSubmitable({
+			...submitable,
+			fields:
+				Object.keys(filtered).length === Object.keys(formFields).length,
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formFields]);
+
 	const [register, { loading }] = useMutation(USER_REGISTER, {
-		variables: { ...formFields },
 		onCompleted({ register: userData }) {
 			context.login(userData);
 
@@ -65,6 +85,20 @@ const Register = ({ history, location }) => {
 		},
 	});
 
+	const [singleUpload] = useMutation(FILE_UPLOAD, {
+		async onCompleted({ singleUpload }) {
+			await register({
+				variables: {
+					...formFields,
+					image: singleUpload.id,
+				},
+			});
+		},
+		onError(err) {
+			console.log(JSON.stringify(err, null, 2));
+		},
+	});
+
 	const onChangeHandler = (e) => {
 		setFormFields({
 			...formFields,
@@ -74,7 +108,15 @@ const Register = ({ history, location }) => {
 
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
-		await register();
+		if (image.file) {
+			await singleUpload({ variables: { file: image.file } });
+		} else {
+			await register({
+				variables: {
+					...formFields,
+				},
+			});
+		}
 	};
 
 	return (
@@ -98,24 +140,22 @@ const Register = ({ history, location }) => {
 						</Fieldset>
 						<Fieldset>
 							<Label>Image</Label>
-							<ImageUpload
-								image={image}
-								setImage={setImage}
-								inputId="image"
-								hasError={errors.image}
-							/>
-							{errors.image && <Error>{errors.image}</Error>}
+							{context.loading ? (
+								<Spinner />
+							) : (
+								<>
+									<ImageUpload
+										image={image}
+										setImage={setImage}
+										inputId="image"
+										hasError={errors.image}
+									/>
+									{errors.image && (
+										<Error>{errors.image}</Error>
+									)}
+								</>
+							)}
 						</Fieldset>
-						{/* <Fieldset>
-							<Input
-								type="text"
-								name="image"
-								onChange={onChangeHandler}
-								value={formFields.image}
-								label="Image"
-								error={errors.image}
-							/>
-						</Fieldset> */}
 						<Fieldset>
 							<Input
 								type="text"
@@ -146,7 +186,11 @@ const Register = ({ history, location }) => {
 								error={errors.rePassword}
 							/>
 						</Fieldset>
-						<Submit>Register</Submit>
+						<Submit
+							submitable={submitable.img && submitable.fields}
+						>
+							Register
+						</Submit>
 					</Form>
 				</FContainer>
 			)}

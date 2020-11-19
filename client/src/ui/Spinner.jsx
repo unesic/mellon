@@ -3,7 +3,7 @@ import { SyncLoader } from "react-spinners";
 
 const Spinner = () => {
 	return (
-		<div className={"text-center mt-16"}>
+		<div className="text-center py-6">
 			<SyncLoader color={"#4fd1c5"} />
 		</div>
 	);

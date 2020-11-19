@@ -4,7 +4,7 @@ import { useLazyQuery } from "@apollo/client";
 
 import { GET_FILE } from "./graphql/fileQueries";
 
-const initialState = { user: null, image: {} };
+const initialState = { user: null, image: {}, loading: true };
 
 if (localStorage.getItem("auth-token")) {
 	const decoded = jwtDecode(localStorage.getItem("auth-token"));
@@ -19,6 +19,7 @@ if (localStorage.getItem("auth-token")) {
 const AuthContext = createContext({
 	user: null,
 	image: {},
+	loading: true,
 	login: (data) => {},
 	logout: () => {},
 });
@@ -34,6 +35,11 @@ const authReducer = (state, action) => {
 			return {
 				...state,
 				image: action.payload,
+			};
+		case "SET_LOADING":
+			return {
+				...state,
+				loading: action.payload,
 			};
 		case "LOGOUT":
 			return {
@@ -54,6 +60,11 @@ const AuthProvider = (props) => {
 				type: "SET_IMAGE",
 				payload: imageData,
 			});
+
+			dispatch({
+				type: "SET_LOADING",
+				payload: false,
+			});
 		},
 		onError(err) {
 			console.log(JSON.stringify(err, null, 2));
@@ -69,8 +80,11 @@ const AuthProvider = (props) => {
 	useEffect(() => {
 		if (state.user) {
 			setImage(state.user.image);
+		} else {
+			setImage(process.env.REACT_APP_DEFAULT_USER_AVATAR); // default user avatar
 		}
-	}, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.user]);
 
 	const login = async (userData) => {
 		setImage(userData.image);
@@ -93,7 +107,11 @@ const AuthProvider = (props) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user: state.user, image: state.image, login, logout }}
+			value={{
+				...state,
+				login,
+				logout,
+			}}
 			{...props}
 		/>
 	);
