@@ -7,9 +7,13 @@ const requiredString = {
 
 const usersSchema = new Schema(
 	{
+		first_name: String,
+		last_name: String,
+		gender: String,
+		age: String,
+		username: requiredString,
 		email: requiredString,
 		password: requiredString,
-		name: requiredString,
 		image: {
 			type: Schema.Types.ObjectId,
 			ref: "Files",

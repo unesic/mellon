@@ -4,7 +4,7 @@ import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
 import fc from "./Form.classes";
 
-export const FContainer = ({ formType = "", children }) => {
+export const FContainer = React.memo(({ formType = "", children }) => {
 	return (
 		<div className={fc.Container}>
 			<div className={fc.ContainerInner}>
@@ -30,96 +30,108 @@ export const FContainer = ({ formType = "", children }) => {
 			</div>
 		</div>
 	);
-};
+});
 
-export const FormTitle = ({ children }) => {
+export const FormTitle = React.memo(({ children }) => {
 	return <h2 className={fc.Title}>{children}</h2>;
-};
+});
 
-export const Form = ({ generalError = false, onSubmit, children }) => {
+export const Form = React.memo(
+	({ generalError = false, onSubmit, children }) => {
+		return (
+			<form
+				className={generalError ? fc.FormGeneralError : fc.Form}
+				onSubmit={onSubmit}
+			>
+				{children}
+			</form>
+		);
+	}
+);
+
+export const FieldsetGroup = React.memo(({ children }) => {
+	return <div className={fc.fieldsetGroup}>{children}</div>;
+});
+
+export const Fieldset = React.memo(({ width = "", children }) => {
 	return (
-		<form
-			className={generalError ? fc.FormGeneralError : fc.Form}
-			onSubmit={onSubmit}
+		<fieldset
+			className={`${fc.Fieldset} ${width === "" ? "w-full" : width}`}
 		>
 			{children}
-		</form>
+		</fieldset>
 	);
-};
+});
 
-export const Fieldset = ({ children }) => {
-	return <fieldset className={fc.Fieldset}>{children}</fieldset>;
-};
+export const Label = React.memo(
+	({ htmlFor, checkbox = { type: "", value: "" }, children }) => {
+		return (
+			<label
+				htmlFor={htmlFor}
+				className={`${fc.Label} ${checkbox && fc.CheckboxLabel}`}
+			>
+				{checkbox.type === "checkbox" && (
+					<span
+						className={`${fc.CheckboxIcon} ${
+							checkbox.value && fc.CheckboxIconChecked
+						}`}
+					>
+						{checkbox.value ? (
+							<ImCheckboxChecked />
+						) : (
+							<ImCheckboxUnchecked />
+						)}
+					</span>
+				)}
+				{children}
+			</label>
+		);
+	}
+);
 
-export const Label = ({
-	htmlFor,
-	checkbox = { type: "", value: "" },
-	children,
-}) => {
-	return (
-		<label
-			htmlFor={htmlFor}
-			className={`${fc.Label} ${checkbox && fc.CheckboxLabel}`}
-		>
-			{checkbox.type === "checkbox" && (
-				<span
-					className={`${fc.CheckboxIcon} ${
-						checkbox.value && fc.CheckboxIconChecked
-					}`}
-				>
-					{checkbox.value ? (
-						<ImCheckboxChecked />
-					) : (
-						<ImCheckboxUnchecked />
-					)}
-				</span>
-			)}
-			{children}
-		</label>
-	);
-};
-
-export const Error = ({ general = false, children }) => {
+export const Error = React.memo(({ general = false, children }) => {
 	return (
 		<small className={general ? fc.ErrorMsgGeneral : fc.ErrorMsg}>
 			{children}
 		</small>
 	);
-};
+});
 
-export const Input = ({
-	type,
-	name,
-	onChange,
-	value,
-	placeholder,
-	label,
-	withLabel = true,
-	error,
-}) => {
-	return (
-		<>
-			{withLabel && (
-				<Label htmlFor={name} checkbox={{ type, value }}>
-					{label}
-				</Label>
-			)}
-			<input
-				type={type}
-				id={name}
-				name={name}
-				className={`${fc.Input} ${error ? fc.InputHasErrors : ""}`}
-				onChange={onChange}
-				value={value}
-				placeholder={placeholder}
-				style={{ display: type === "checkbox" && "none" }}
-			/>
-			{error && <Error>{error}</Error>}
-		</>
-	);
-};
+export const Input = React.memo(
+	({
+		type,
+		name,
+		onChange,
+		value,
+		placeholder,
+		label,
+		withLabel = true,
+		error,
+	}) => {
+		return (
+			<>
+				{withLabel && (
+					<Label htmlFor={name} checkbox={{ type, value }}>
+						{label}
+					</Label>
+				)}
+				<input
+					type={type}
+					id={name}
+					name={name}
+					className={`${fc.Input} ${error ? fc.InputHasErrors : ""}`}
+					onChange={onChange}
+					value={value}
+					placeholder={placeholder}
+					style={{ display: type === "checkbox" && "none" }}
+				/>
+				{error && <Error>{error}</Error>}
+			</>
+		);
+	}
+);
 
-export const Submit = ({ submitable = true, children }) => {
+export const Submit = React.memo(({ submitable = true, children }) => {
 	return (
 		<button
 			type="submit"
@@ -129,8 +141,8 @@ export const Submit = ({ submitable = true, children }) => {
 			{children}
 		</button>
 	);
-};
+});
 
-export const AdditionalText = ({ children }) => {
+export const AdditionalText = React.memo(({ children }) => {
 	return <p className={fc.AdditionalText}>{children}</p>;
-};
+});

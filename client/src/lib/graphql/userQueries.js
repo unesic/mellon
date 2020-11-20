@@ -2,23 +2,35 @@ import gql from "graphql-tag";
 
 const USER_REGISTER = gql`
 	mutation register(
+		$first_name: String
+		$last_name: String
+		$gender: String
+		$age: String
+		$image: ID!
+		$username: String!
 		$email: String!
 		$password: String!
 		$rePassword: String!
-		$name: String!
-		$image: ID!
 	) {
 		register(
+			first_name: $first_name
+			last_name: $last_name
+			gender: $gender
+			age: $age
+			image: $image
+			username: $username
 			email: $email
 			password: $password
 			rePassword: $rePassword
-			name: $name
-			image: $image
 		) {
 			id
-			email
-			name
+			first_name
+			last_name
+			gender
+			age
 			image
+			username
+			email
 			token
 		}
 	}
@@ -28,9 +40,13 @@ const USER_LOGIN = gql`
 	mutation login($email: String!, $password: String!, $remember: Boolean!) {
 		login(email: $email, password: $password, remember: $remember) {
 			id
-			email
-			name
+			first_name
+			last_name
+			gender
+			age
 			image
+			username
+			email
 			token
 		}
 	}
@@ -39,24 +55,36 @@ const USER_LOGIN = gql`
 const USER_UPDATE = gql`
 	mutation update(
 		$id: ID!
+		$first_name: String
+		$last_name: String
+		$gender: String
+		$age: String
+		$image: ID!
+		$username: String!
 		$email: String!
 		$password: String!
 		$rePassword: String!
-		$name: String!
-		$image: ID!
 	) {
 		update(
 			id: $id
+			first_name: $first_name
+			last_name: $last_name
+			gender: $gender
+			age: $age
+			image: $image
+			username: $username
 			email: $email
 			password: $password
 			rePassword: $rePassword
-			name: $name
-			image: $image
 		) {
 			id
-			email
-			name
+			first_name
+			last_name
+			gender
+			age
 			image
+			username
+			email
 			token
 		}
 	}

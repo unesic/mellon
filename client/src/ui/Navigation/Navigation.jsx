@@ -7,7 +7,7 @@ import UserAvatar from "../../ui/UserAvatar/UserAvatar";
 
 import classes from "./Navigation.classes";
 
-const Navigation = () => {
+const Navigation = React.memo(() => {
 	const context = useContext(AuthContext);
 	const history = useHistory();
 
@@ -92,6 +92,6 @@ const Navigation = () => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default Navigation;

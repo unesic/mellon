@@ -1,0 +1,24 @@
+{
+	"formFields": [
+		{
+			"name": "email",
+			"label": "Email Address",
+			"required": true
+		},
+		{
+			"type": "password",
+			"name": "password",
+			"label": "Password",
+			"required": true
+		},
+		{
+			"type": "checkbox",
+			"name": "remember",
+			"label": "Keep me signed in",
+			"value": false
+		}
+	],
+	"formType": "login",
+	"formTitle": "Login",
+	"submitLabel": "Login"
+}

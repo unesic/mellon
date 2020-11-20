@@ -41,9 +41,13 @@ module.exports = gql`
 
 	type User {
 		id: ID!
-		email: String!
-		name: String!
+		first_name: String
+		last_name: String
+		gender: String
+		age: String
 		image: ID!
+		username: String!
+		email: String!
 		days: [ID]!
 		token: String!
 	}
@@ -69,20 +73,28 @@ module.exports = gql`
 
 	type Mutation {
 		register(
+			first_name: String
+			last_name: String
+			gender: String
+			age: String
+			image: ID!
+			username: String!
 			email: String!
 			password: String!
 			rePassword: String!
-			name: String!
-			image: ID!
 		): User!
 		login(email: String!, password: String!, remember: Boolean!): User!
 		update(
 			id: ID!
+			first_name: String
+			last_name: String
+			gender: String
+			age: String
+			image: ID
+			username: String
 			email: String
 			password: String
 			rePassword: String
-			name: String
-			image: ID
 		): User!
 
 		createDay(date: String!): Day!

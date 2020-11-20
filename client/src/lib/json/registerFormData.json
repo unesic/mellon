@@ -1,0 +1,55 @@
+{
+	"formFields": [
+		{
+			"name": "first_name",
+			"label": "First Name",
+			"width": "1/2"
+		},
+		{
+			"name": "last_name",
+			"label": "Last Name",
+			"width": "1/2"
+		},
+		{
+			"name": "gender",
+			"label": "Gender",
+			"width": "1/2"
+		},
+		{
+			"name": "age",
+			"label": "Age",
+			"width": "1/2"
+		},
+		{
+			"type": "image",
+			"name": "image",
+			"label": "Image",
+			"required": true
+		},
+		{
+			"name": "username",
+			"label": "Username",
+			"required": true
+		},
+		{
+			"name": "email",
+			"label": "Email Address",
+			"required": true
+		},
+		{
+			"type": "password",
+			"name": "password",
+			"label": "Password",
+			"required": true
+		},
+		{
+			"type": "password",
+			"name": "rePassword",
+			"label": "Re-type Password",
+			"required": true
+		}
+	],
+	"formType": "register",
+	"formTitle": "Register",
+	"submitLabel": "Register"
+}

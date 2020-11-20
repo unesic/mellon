@@ -13,9 +13,13 @@ const generateToken = (user, remember) => {
 	return jwt.sign(
 		{
 			id: user._id,
-			email: user.email,
-			name: user.name,
+			first_name: user.first_name,
+			last_name: user.last_name,
+			gender: user.gender,
+			age: user.age,
+			username: user.username,
 			image: user.image,
+			email: user.email,
 		},
 		process.env.JWT_SECRET,
 		remember ? {} : { expiresIn: "1h" }
@@ -46,22 +50,36 @@ module.exports = {
 		},
 	},
 	Mutation: {
-		register: async (_, { email, password, rePassword, name, image }) => {
-			const { valid, errors } = validateRegisterInput(
+		register: async (
+			_,
+			{
+				first_name,
+				last_name,
+				gender,
+				age,
+				image,
+				username,
 				email,
 				password,
 				rePassword,
-				name,
-				image
+			}
+		) => {
+			const { valid, errors } = validateRegisterInput(
+				username,
+				image,
+				email,
+				password,
+				rePassword
 			);
 
 			if (!valid) {
 				throw new UserInputError("Errors", { errors });
 			}
 
-			const user = await Users.findOne({ email });
+			const userMail = await Users.findOne({ email });
+			const userName = await Users.findOne({ username });
 
-			if (user) {
+			if (userMail) {
 				throw new UserInputError("Email is taken", {
 					errors: {
 						email: "This email is taken",
@@ -69,13 +87,25 @@ module.exports = {
 				});
 			}
 
+			if (userName) {
+				throw new UserInputError("Username is taken", {
+					errors: {
+						email: "This username is taken",
+					},
+				});
+			}
+
 			password = await bcrypt.hash(password, 12);
 
 			const newUser = new Users({
+				first_name,
+				last_name,
+				gender,
+				age,
+				username,
+				image,
 				email,
 				password,
-				name,
-				image,
 			});
 			const res = await newUser.save();
 			const token = generateToken(res);
@@ -114,8 +144,23 @@ module.exports = {
 				token,
 			};
 		},
-		update: async (_, { id, email, password, rePassword, name, image }) => {
+		update: async (
+			_,
+			{
+				id,
+				first_name,
+				last_name,
+				gender,
+				age,
+				image,
+				username,
+				email,
+				password,
+				rePassword,
+			}
+		) => {
 			const { valid, errors } = validateUpdateInput(
+				username,
 				email,
 				password,
 				rePassword
@@ -125,12 +170,21 @@ module.exports = {
 				throw new UserInputError("Errors", { errors });
 			}
 
-			const user = await Users.findOne({ email });
+			const userMail = await Users.findOne({ email });
+			const userName = await Users.findOne({ username });
 
-			if (user && user.id !== id) {
+			if (userMail && userMail.id !== id) {
 				throw new UserInputError("Email is taken", {
 					errors: {
 						email: "This email is taken",
+					},
+				});
+			}
+
+			if (userName && userName.id !== id) {
+				throw new UserInputError("Username is taken", {
+					errors: {
+						email: "This username is taken",
 					},
 				});
 			}
@@ -144,10 +198,14 @@ module.exports = {
 			const res = await Users.findByIdAndUpdate(
 				id,
 				{
+					first_name: first_name || currUser.first_name,
+					last_name: last_name || currUser.last_name,
+					gender: gender || currUser.gender,
+					age: age || currUser.age,
+					image: image || currUser.image,
+					username: username || currUser.username,
 					email: email || currUser.email,
 					password: password || currUser.password,
-					name: name || currUser.name,
-					image: image || currUser.image,
 				},
 				{ new: true }
 			);

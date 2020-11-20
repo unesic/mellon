@@ -1,6 +1,6 @@
 const Classes = {};
 
-Classes.Container = ["max-w-sm", "mx-auto"].join(" ");
+Classes.Container = ["max-w-md", "mx-auto"].join(" ");
 
 Classes.ContainerInner = ["w-full"].join(" ");
 
@@ -13,6 +13,8 @@ Classes.Title = [
 ].join(" ");
 
 Classes.Form = [
+	"flex",
+	"flex-wrap",
 	"w-full",
 	"border",
 	"border-solid",
@@ -34,7 +36,9 @@ Classes.FormGeneralError = [
 	"py-5",
 ].join(" ");
 
-Classes.Fieldset = ["flex", "flex-col", "px-3", "mb-3"].join(" ");
+Classes.fieldsetGroup = ["flex"].join(" ");
+
+Classes.Fieldset = ["flex", "flex-grow", "flex-col", "px-3", "mb-3"].join(" ");
 
 Classes.Label = ["flex", "items-center", "pl-1", "text-gray-700"].join(" ");
 

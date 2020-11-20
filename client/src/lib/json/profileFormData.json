@@ -1,0 +1,50 @@
+{
+	"formFields": [
+		{
+			"name": "first_name",
+			"label": "First Name",
+			"width": "1/2"
+		},
+		{
+			"name": "last_name",
+			"label": "Last Name",
+			"width": "1/2"
+		},
+		{
+			"name": "gender",
+			"label": "Gender",
+			"width": "1/2"
+		},
+		{
+			"name": "age",
+			"label": "Age",
+			"width": "1/2"
+		},
+		{
+			"type": "image",
+			"name": "image",
+			"label": "Image"
+		},
+		{
+			"name": "username",
+			"label": "Username"
+		},
+		{
+			"name": "email",
+			"label": "Email Address"
+		},
+		{
+			"type": "password",
+			"name": "password",
+			"label": "Password"
+		},
+		{
+			"type": "password",
+			"name": "rePassword",
+			"label": "Re-type Password"
+		}
+	],
+	"formType": "profile",
+	"formTitle": "Profile",
+	"submitLabel": "Update"
+}
