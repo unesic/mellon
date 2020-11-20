@@ -6,8 +6,6 @@ const Homepage = ({ location }) => {
 	const { loading, data } = useQuery(FETCH_DAYS_QUERY);
 
 	useEffect(() => {
-		// if (data) console.log(data);
-		// location.state && console.log(location.state.msg)
 	}, [data]);
 
 	return (

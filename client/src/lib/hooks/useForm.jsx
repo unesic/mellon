@@ -6,6 +6,7 @@ import {
 	Form,
 	Fieldset,
 	Input,
+	Select,
 	Label,
 	Error,
 	Submit,
@@ -50,8 +51,9 @@ const getFormState = (fields) => {
 			name: f.name,
 			label: f.label,
 			required: f.required || false,
-			value: f.value || "",
+			value: f.type !== "checkbox" ? f.value || "" : f.value || false,
 			placeholder: f.placeholder || "",
+			options: f.options || null,
 			error: "",
 			width: `w-${f.width || "full"}`,
 		};
@@ -115,7 +117,7 @@ const useForm = (
 				}))
 				.filter((e) => e.value !== "" && e.name !== "image").length;
 
-			setSubmitable(done);
+			setSubmitable(image.blob || done);
 		} else {
 			const { required } = Object.keys(formState)
 				.map((key) => ({ required: formState[key].required }))
@@ -150,12 +152,9 @@ const useForm = (
 	const getFields = () => {
 		const fields = Object.keys(formState).map((key) => {
 			const { type: t } = formState[key];
-			if (
-				t === "text" ||
-				t === "password" ||
-				t === "number" ||
-				t === "checkbox"
-			) {
+			const typesArray = ["text", "password", "number", "checkbox"];
+
+			if (typesArray.includes(t)) {
 				return (
 					<Fieldset
 						key={formState[key].name}
@@ -184,6 +183,18 @@ const useForm = (
 						{formState[key].error && (
 							<Error>{formState[key].error}</Error>
 						)}
+					</Fieldset>
+				);
+			} else if (t === "select") {
+				return (
+					<Fieldset
+						key={formState[key].name}
+						width={formState[key].width}
+					>
+						<Select
+							{...formState[key]}
+							onChange={onChangeHandler}
+						/>
 					</Fieldset>
 				);
 			} else {

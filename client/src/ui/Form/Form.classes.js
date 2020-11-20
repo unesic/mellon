@@ -39,8 +39,28 @@ Classes.FormGeneralError = [
 Classes.fieldsetGroup = ["flex"].join(" ");
 
 Classes.Fieldset = ["flex", "flex-grow", "flex-col", "px-3", "mb-3"].join(" ");
+// Classes.Fieldset = [
+// 	"flex",
+// 	"flex-grow",
+// 	"flex-col",
+// 	"px-3",
+// 	"mb-3",
+// 	"relative",
+// ].join(" ");
 
 Classes.Label = ["flex", "items-center", "pl-1", "text-gray-700"].join(" ");
+
+// Classes.Label = [
+// 	"absolute",
+// 	"transform",
+// 	"translate-x-1",
+// 	"translate-y-1",
+// 	"scale-90",
+// 	"text-gray-700",
+// 	"transition-all",
+// 	"ease-in-out",
+// 	"duration-200",
+// ].join(" ");
 
 Classes.CheckboxIcon = ["pr-2", "text-gray-400"].join(" ");
 
@@ -54,10 +74,19 @@ Classes.Input = [
 	"border",
 	"border-solid",
 	"border-gray-300",
-	"focus",
+	// "rounded",
+	// "py-1",
+	// "pt-6",
+	// "px-2",
+	// "bg-white",
+	// "border",
+	// "border-solid",
+	// "border-gray-300",
 ].join(" ");
 
 Classes.InputHasErrors = ["border-red-600"].join(" ");
+
+Classes.SelectPlaceholder = ["text-gray-500"].join(" ");
 
 Classes.ErrorMsg = ["mt-1", "pl-2", "text-orange-600"].join(" ");
 

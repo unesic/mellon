@@ -131,6 +131,42 @@ export const Input = React.memo(
 	}
 );
 
+export const Select = React.memo(
+	({
+		name,
+		onChange,
+		value,
+		placeholder,
+		options,
+		label,
+		withLabel = true,
+		error,
+	}) => {
+		return (
+			<>
+				{withLabel && <Label htmlFor={name}>{label}</Label>}
+				<select
+					name={name}
+					id={name}
+					value={value || placeholder}
+					onChange={onChange}
+					className={`${fc.Input} ${
+						value === "" ? fc.SelectPlaceholder : null
+					}`}
+				>
+					<option value="">Select one...</option>
+					{options.map((o) => (
+						<option value={o.value} key={o.value}>
+							{o.label}
+						</option>
+					))}
+				</select>
+				{error && <Error>{error}</Error>}
+			</>
+		);
+	}
+);
+
 export const Submit = React.memo(({ submitable = true, children }) => {
 	return (
 		<button

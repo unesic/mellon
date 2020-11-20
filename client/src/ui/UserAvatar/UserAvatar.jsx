@@ -4,7 +4,7 @@ import classes from "./UserAvatar.classes";
 
 const UserAvatar = ({ isDefault = false, src, alt, size = "md", styles }) => {
 	return (
-		<div className={`${classes.container} ${styles}`}>
+		<div className={styles && styles}>
 			{isDefault ? (
 				<img
 					src="/default-avatar.png"

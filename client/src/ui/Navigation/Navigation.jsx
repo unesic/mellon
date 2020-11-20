@@ -43,7 +43,7 @@ const Navigation = React.memo(() => {
 						)}
 
 						<span className={classes.username}>
-							{context.user ? context.user.name : "User"}
+							{context.user ? context.user.username : "User"}
 						</span>
 					</header>
 
