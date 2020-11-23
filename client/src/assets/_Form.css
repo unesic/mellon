@@ -1,0 +1,79 @@
+.Form__Container {
+	@apply max-w-md mx-auto;
+}
+
+.Form__ContainerInner {
+	@apply w-full;
+}
+
+.Form__Title {
+	@apply text-center font-semibold text-3xl mb-5 pt-6;
+}
+
+.Form__Form {
+	@apply flex flex-wrap w-full border border-solid border-gray-400 rounded bg-gray-100 px-3 py-5;
+}
+
+.Form__FormGeneralError {
+	@apply w-full border border-solid border-red-600 rounded bg-gray-100 px-3 py-5;
+}
+
+.Form__FieldsetGroup {
+	@apply flex;
+}
+
+.Form__Fieldset {
+	@apply flex flex-grow flex-col px-3 mb-3;
+}
+
+.Form__Label {
+	@apply flex items-center pl-1 text-gray-700;
+}
+
+.Form__CheckboxIcon {
+	@apply pr-2 text-gray-400;
+}
+
+.Form__CheckboxIconChecked {
+	@apply text-teal-600;
+}
+
+.Form__Input {
+	@apply rounded py-1 px-2 bg-white border border-solid border-gray-300;
+}
+
+.Form__InputHasErrors {
+	@apply border-red-600;
+}
+
+.Form__SelectPlaceholder {
+	@apply text-gray-500;
+}
+
+.Form__ErrorMsg {
+	@apply mt-1 pl-2 text-orange-600;
+}
+
+.Form__ErrorMsgGeneral {
+	@apply block mb-2 text-base text-orange-600 text-center;
+}
+
+.Form__Button {
+	@apply block rounded px-3 py-2 mx-auto mt-5 bg-teal-500 text-gray-200;
+}
+
+.Form__ButtonDisabled {
+	@apply block rounded px-3 py-2 mx-auto mt-5 bg-gray-500 text-gray-200 cursor-not-allowed;
+}
+
+.Form__AdditionalText {
+	@apply mt-4 text-center text-gray-600;
+}
+
+.Form__AdditionalTextLink {
+	@apply text-teal-400 font-semibold;
+}
+
+.Form__AdditionalTextLink:hover {
+	@apply text-teal-500;
+}

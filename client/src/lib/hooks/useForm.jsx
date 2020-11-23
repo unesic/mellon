@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-import * as F from "ui/Form/Form";
+import * as F from "ui/Form";
 import Spinner from "ui/Spinner";
-import ImageUpload from "ui/ImageUpload/ImageUpload";
+import ImageUpload from "ui/ImageUpload";
 import { AuthContext } from "lib/AuthContext";
 import * as lib from "./useForm.lib";
 

@@ -1,7 +1,5 @@
 import React from "react";
 
-import classes from "./UserAvatar.classes";
-
 const UserAvatar = ({ isDefault = false, src, alt, size = "md", styles }) => {
 	return (
 		<div className={styles && styles}>
@@ -9,13 +7,13 @@ const UserAvatar = ({ isDefault = false, src, alt, size = "md", styles }) => {
 				<img
 					src="/default-avatar.png"
 					alt="Mellon default avatar"
-					className={`${classes.base} ${classes[size]}`}
+					className={`UserAvatar__Base UserAvatar__${size}`}
 				/>
 			) : (
 				<img
 					src={src}
 					alt={`${alt}'s avatar`}
-					className={`${classes.base} ${classes[size]}`}
+					className={`UserAvatar__Base UserAvatar__${size}`}
 				/>
 			)}
 		</div>

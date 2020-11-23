@@ -1,0 +1,9 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+@import "./_Form.css";
+@import "./_ImageUpload.css";
+@import "./_Navigation.css";
+@import "./_UserAvatar.css";
+
+@import "tailwindcss/utilities";

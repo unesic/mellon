@@ -2,26 +2,27 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
-import fc from "./Form.classes";
-
 export const FContainer = React.memo(({ formType = "", children }) => {
 	return (
-		<div className={fc.Container}>
-			<div className={fc.ContainerInner}>
+		<div className="Form__Container">
+			<div className="Form__ContainerInner">
 				{children}
 				{formType === "register" ? (
-					<p className={fc.AdditionalText}>
+					<p className="Form__AdditionalText">
 						Already have an account?{" "}
-						<NavLink to="/login" className={fc.AdditionalTextLink}>
+						<NavLink
+							to="/login"
+							className="Form__AdditionalTextLink"
+						>
 							Log In
 						</NavLink>
 					</p>
 				) : formType === "login" ? (
-					<p className={fc.AdditionalText}>
+					<p className="Form__AdditionalText">
 						Don't have an account?{" "}
 						<NavLink
 							to="/register"
-							className={fc.AdditionalTextLink}
+							className="Form__AdditionalTextLink"
 						>
 							Register
 						</NavLink>
@@ -33,14 +34,16 @@ export const FContainer = React.memo(({ formType = "", children }) => {
 });
 
 export const FormTitle = React.memo(({ children }) => {
-	return <h2 className={fc.Title}>{children}</h2>;
+	return <h2 className="Form__Title">{children}</h2>;
 });
 
 export const Form = React.memo(
 	({ generalError = false, onSubmit, children }) => {
 		return (
 			<form
-				className={generalError ? fc.FormGeneralError : fc.Form}
+				className={
+					generalError ? "Form__FormGeneralError" : "Form__Form"
+				}
 				onSubmit={onSubmit}
 			>
 				{children}
@@ -50,13 +53,13 @@ export const Form = React.memo(
 );
 
 export const FieldsetGroup = React.memo(({ children }) => {
-	return <div className={fc.fieldsetGroup}>{children}</div>;
+	return <div className="Form__FieldsetGroup">{children}</div>;
 });
 
 export const Fieldset = React.memo(({ width = "", children }) => {
 	return (
 		<fieldset
-			className={`${fc.Fieldset} ${width === "" ? "w-full" : width}`}
+			className={`${"Form__Fieldset"} ${width === "" ? "w-full" : width}`}
 		>
 			{children}
 		</fieldset>
@@ -68,12 +71,14 @@ export const Label = React.memo(
 		return (
 			<label
 				htmlFor={htmlFor}
-				className={`${fc.Label} ${checkbox && fc.CheckboxLabel}`}
+				className={`${"Form__Label"} ${
+					checkbox && "Form__CheckboxLabel"
+				}`}
 			>
 				{checkbox.type === "checkbox" && (
 					<span
-						className={`${fc.CheckboxIcon} ${
-							checkbox.value && fc.CheckboxIconChecked
+						className={`${"Form__CheckboxIcon"} ${
+							checkbox.value && "Form__CheckboxIconChecked"
 						}`}
 					>
 						{checkbox.value ? (
@@ -91,7 +96,7 @@ export const Label = React.memo(
 
 export const Error = React.memo(({ general = false, children }) => {
 	return (
-		<small className={general ? fc.ErrorMsgGeneral : fc.ErrorMsg}>
+		<small className={general ? "Form__ErrorMsgGeneral" : "Form__ErrorMsg"}>
 			{children}
 		</small>
 	);
@@ -119,7 +124,9 @@ export const Input = React.memo(
 					type={type}
 					id={name}
 					name={name}
-					className={`${fc.Input} ${error ? fc.InputHasErrors : ""}`}
+					className={`${"Form__Input"} ${
+						error ? "Form__InputHasErrors" : ""
+					}`}
 					onChange={onChange}
 					value={value}
 					placeholder={placeholder}
@@ -150,8 +157,8 @@ export const Select = React.memo(
 					id={name}
 					value={value || placeholder}
 					onChange={onChange}
-					className={`${fc.Input} ${
-						value === "" ? fc.SelectPlaceholder : null
+					className={`${"Form__Input"} ${
+						value === "" ? "Form__SelectPlaceholder" : null
 					}`}
 				>
 					<option value="">Select one...</option>
@@ -171,7 +178,7 @@ export const Submit = React.memo(({ submitable = true, children }) => {
 	return (
 		<button
 			type="submit"
-			className={submitable ? fc.Button : fc.ButtonDisabled}
+			className={submitable ? "Form__Button" : "Form__ButtonDisabled"}
 			disabled={!submitable}
 		>
 			{children}
@@ -180,5 +187,5 @@ export const Submit = React.memo(({ submitable = true, children }) => {
 });
 
 export const AdditionalText = React.memo(({ children }) => {
-	return <p className={fc.AdditionalText}>{children}</p>;
+	return <p className="Form__AdditionalText">{children}</p>;
 });

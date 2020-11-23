@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import reportWebVitals from "./reportWebVitals";
-import "./index.css";
+// import "./index.css";
+import "assets/main.css";
 import "lib/objFilter";
 
 import { AuthProvider } from "lib/AuthContext";

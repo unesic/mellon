@@ -4,42 +4,41 @@ import { FaSeedling, FaUser } from "react-icons/fa";
 import { BsGearWideConnected } from "react-icons/bs";
 
 import { AuthContext } from "lib/AuthContext";
-import UserAvatar from "ui/UserAvatar/UserAvatar";
-import classes from "./Navigation.classes";
+import UserAvatar from "ui/UserAvatar";
 
 const Navigation = React.memo(() => {
 	const context = useContext(AuthContext);
 	const history = useHistory();
 
 	return (
-		<div className={classes.container}>
-			<div className={classes.containerInner}>
-				<div className={classes.sectionFirst}>
-					<header className={classes.header}>
-						<FaSeedling className={classes.headerIcon} />
+		<div className="Navigation__Container">
+			<div className="Navigation__ContainerInner">
+				<div className="Navigation__SectionFirst">
+					<header className="Navigation__Header">
+						<FaSeedling className="Navigation__HeaderIcon" />
 						Mellon
 					</header>
-					<div className={classes.links}>
+					<div className="Navigation__Links">
 						<NavLink
 							to="/"
 							exact
-							className={`${classes.navLink} ${classes.navLinkNotDone}`}
-							activeClassName={classes.navLinkActive}
+							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							activeClassName="Navigation__NavLinkActive"
 						>
 							Daily tracking
 						</NavLink>
 						<NavLink
 							to="/analytics"
 							exact
-							className={`${classes.navLink} ${classes.navLinkNotDone}`}
-							activeClassName={classes.navLinkActive}
+							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							activeClassName="Navigation__NavLinkActive"
 						>
 							Analytics dashboard
 						</NavLink>
 					</div>
 				</div>
-				<div className={classes.section}>
-					<header className={classes.header}>
+				<div className="Navigation__Section">
+					<header className="Navigation__Header">
 						{context.image && context.image.filename ? (
 							<UserAvatar
 								src={`${process.env.REACT_APP_SERVER_URL}/${context.image.path}`}
@@ -47,27 +46,27 @@ const Navigation = React.memo(() => {
 								size="xs"
 							/>
 						) : (
-							<FaUser className={classes.headerIcon} />
+							<FaUser className="Navigation__HeaderIcon" />
 						)}
 
-						<span className={classes.username}>
+						<span className="Navigation__Username">
 							{context.user ? context.user.username : "User"}
 						</span>
 					</header>
 
-					<div className={classes.links}>
+					<div className="Navigation__Links">
 						{context.user ? (
 							<>
 								<NavLink
 									to="/profile"
-									className={`${classes.navLink} ${classes.navLinkDone}`}
-									activeClassName={classes.navLinkActive}
+									className="Navigation__NavLink Navigation__NavLinkDone"
+									activeClassName="Navigation__NavLinkActive"
 								>
 									Profile
 								</NavLink>
 								<a
 									href="/logout"
-									className={`${classes.navLink} ${classes.navLinkDone}`}
+									className="Navigation__NavLink Navigation__NavLinkDone"
 									onClick={(e) => {
 										e.preventDefault();
 										context.logout();
@@ -81,15 +80,15 @@ const Navigation = React.memo(() => {
 							<>
 								<NavLink
 									to="/register"
-									className={`${classes.navLink} ${classes.navLinkDone}`}
-									activeClassName={classes.navLinkActive}
+									className="Navigation__NavLink Navigation__NavLinkDone"
+									activeClassName="Navigation__NavLinkActive"
 								>
 									Register
 								</NavLink>
 								<NavLink
 									to="/login"
-									className={`${classes.navLink} ${classes.navLinkDone}`}
-									activeClassName={classes.navLinkActive}
+									className="Navigation__NavLink Navigation__NavLinkDone"
+									activeClassName="Navigation__NavLinkActive"
 								>
 									Login
 								</NavLink>
@@ -97,31 +96,31 @@ const Navigation = React.memo(() => {
 						)}
 					</div>
 				</div>
-				<div className={classes.section}>
-					<header className={classes.header}>
-						<BsGearWideConnected className={classes.headerIcon} />
+				<div className="Navigation__Section">
+					<header className="Navigation__Header">
+						<BsGearWideConnected className="Navigation__HeaderIcon" />
 						Settings
 					</header>
 
-					<div className={classes.links}>
+					<div className="Navigation__Links">
 						<NavLink
 							to="/user-settings"
-							className={`${classes.navLink} ${classes.navLinkNotDone}`}
-							activeClassName={classes.navLinkActive}
+							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							activeClassName="Navigation__NavLinkActive"
 						>
 							User settings
 						</NavLink>
 						<NavLink
 							to="/user-settings"
-							className={`${classes.navLink} ${classes.navLinkNotDone}`}
-							activeClassName={classes.navLinkActive}
+							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							activeClassName="Navigation__NavLinkActive"
 						>
 							App settings
 						</NavLink>
 						<NavLink
 							to="/user-settings"
-							className={`${classes.navLink} ${classes.navLinkNotDone}`}
-							activeClassName={classes.navLinkActive}
+							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							activeClassName="Navigation__NavLinkActive"
 						>
 							Privacy settings
 						</NavLink>

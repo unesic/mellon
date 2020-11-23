@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import Navigation from "ui/Navigation/Navigation";
+import Navigation from "ui/Navigation";
 import PrivateRoute from "lib/PrivateRoute";
 import PublicRoute from "lib/PublicRoute";
 import Homepage from "views/Homepage";

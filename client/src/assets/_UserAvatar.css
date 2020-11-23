@@ -1,0 +1,19 @@
+.UserAvatar__Base {
+	@apply rounded-full border-solid border-gray-600 bg-teal-200 object-cover object-center shadow-md;
+}
+
+.UserAvatar__xs {
+	@apply w-10 border-2;
+}
+
+.UserAvatar__sm {
+	@apply w-16 border-2;
+}
+
+.UserAvatar__md {
+	@apply w-32 border-4;
+}
+
+.UserAvatar__lg {
+	@apply w-56 border-8;
+}

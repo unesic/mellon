@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
-import UserAvatar from "ui/UserAvatar/UserAvatar";
-import classes from "./ImageUpload.classes";
+import UserAvatar from "ui/UserAvatar";
 
 const ImageUpload = ({ image, setImage, inputId, hasError = false }) => {
 	const [img, setImg] = useState({ ...image });
@@ -34,13 +33,13 @@ const ImageUpload = ({ image, setImage, inputId, hasError = false }) => {
 				style={{ minHeight: "100px" }}
 			>
 				<div
-					className={`${classes.overlay} ${
-						isDragActive && classes.overlayActive
+					className={`ImageUpload__Overlay ${
+						isDragActive && "ImageUpload__OverlayActive"
 					}`}
 				>
 					<p
-						className={`${classes.overlayText} ${
-							isDragActive && classes.overlayTextActive
+						className={`ImageUpload__OverlayText ${
+							isDragActive && "ImageUpload__OverlayTextActive"
 						}`}
 					>
 						Drop the image here...
@@ -54,7 +53,7 @@ const ImageUpload = ({ image, setImage, inputId, hasError = false }) => {
 				/>
 				{img.filename && (
 					<div
-						className={`${classes.container} ${
+						className={`ImageUpload__Container ${
 							hasError ? "border-red-600" : null
 						}`}
 					>
@@ -74,7 +73,9 @@ const ImageUpload = ({ image, setImage, inputId, hasError = false }) => {
 					</div>
 				)}
 			</div>
-			<p className={classes.text}>Drop image here, or click to select.</p>
+			<p className="ImageUpload__Text">
+				Drop image here, or click to select.
+			</p>
 		</div>
 	);
 };
