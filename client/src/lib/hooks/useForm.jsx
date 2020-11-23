@@ -1,73 +1,20 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-import {
-	FormTitle,
-	FContainer,
-	Form,
-	Fieldset,
-	Input,
-	Select,
-	Label,
-	Error,
-	Submit,
-} from "../../ui/Form/Form";
-import Spinner from "../../ui/Spinner";
-import ImageUpload from "../../ui/ImageUpload/ImageUpload";
-import { AuthContext } from "../AuthContext";
-
-const reducer = (state, action) => {
-	switch (action.type) {
-		case "SET_VALUE":
-			return {
-				...state,
-				[action.payload.name]: {
-					...state[action.payload.name],
-					value: action.payload.value,
-				},
-			};
-		case "SET_ERROR":
-			return {
-				...state,
-				[action.payload.name]: {
-					...state[action.payload.name],
-					error: action.payload.value,
-				},
-			};
-		case "RESET_FORM":
-			return {
-				...action.payload,
-			};
-		default:
-			return state;
-	}
-};
-
-const getFormState = (fields) => {
-	const state = {};
-
-	fields.forEach((f) => {
-		state[f.name] = {
-			type: f.type || "text",
-			name: f.name,
-			label: f.label,
-			required: f.required || false,
-			value: f.type !== "checkbox" ? f.value || "" : f.value || false,
-			placeholder: f.placeholder || "",
-			options: f.options || null,
-			error: "",
-			width: `w-${f.width || "full"}`,
-		};
-	});
-
-	return state;
-};
+import * as F from "ui/Form/Form";
+import Spinner from "ui/Spinner";
+import ImageUpload from "ui/ImageUpload/ImageUpload";
+import { AuthContext } from "lib/AuthContext";
+import * as lib from "./useForm.lib";
 
 const useForm = (
 	{ formFields, formType, formTitle = "", submitLabel = "" },
 	onSubmit
 ) => {
 	const context = useContext(AuthContext);
-	const [formState, dispatch] = useReducer(reducer, getFormState(formFields));
+	const [formState, dispatchFormState] = useReducer(
+		lib.formStateReducer,
+		lib.getFormState(formFields)
+	);
 	const [fields, setFields] = useState(null);
 	const [form, setForm] = useState(null);
 	const [submitable, setSubmitable] = useState(false);
@@ -79,25 +26,29 @@ const useForm = (
 	});
 
 	useEffect(() => {
-		dispatch({
+		dispatchFormState({
 			type: "RESET_FORM",
-			payload: getFormState(formFields),
+			payload: lib.getFormState(formFields),
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [JSON.stringify(formFields)]);
 
 	useEffect(() => {
 		getForm();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fields]);
 
 	useEffect(() => {
 		getFields();
-		updateSubmitable();
+		const isSubmitable = lib.getSubmitable(formType, formState, image);
+		setSubmitable(isSubmitable);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formState, image, context.loading]);
 
 	useEffect(() => {
 		if (formType !== "login") {
-			dispatch({
-				type: "SET_VALUE",
+			dispatchFormState({
+				type: "SET_FIELD_VALUE",
 				payload: {
 					name: "image",
 					value: context.image.id,
@@ -108,94 +59,43 @@ const useForm = (
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formFields, context.image]);
 
-	const updateSubmitable = () => {
-		if (formType === "profile") {
-			const done = Object.keys(formState)
-				.map((key) => ({
-					value: formState[key].value,
-					name: formState[key].name,
-				}))
-				.filter((e) => e.value !== "" && e.name !== "image").length;
-
-			setSubmitable(image.blob || done);
-		} else {
-			const { required } = Object.keys(formState)
-				.map((key) => ({ required: formState[key].required }))
-				.reduce((a, b) => ({
-					required: a.required + b.required,
-				}));
-
-			const done = Object.keys(formState)
-				.map((key) => ({
-					value: formState[key].value,
-					required: formState[key].required,
-				}))
-				.filter((e) => e.value !== "" && e.required).length;
-
-			setSubmitable(required === done);
-		}
-	};
-
-	const onChangeHandler = (e) => {
-		dispatch({
-			type: "SET_VALUE",
-			payload: {
-				name: e.target.name,
-				value:
-					e.target.type === "checkbox"
-						? e.target.checked
-						: e.target.value,
-			},
-		});
-	};
-
 	const getFields = () => {
-		const fields = Object.keys(formState).map((key) => {
-			const { type: t } = formState[key];
-			const typesArray = ["text", "password", "number", "checkbox"];
+		const mostCommonTypes = ["text", "password", "number", "checkbox"];
 
-			if (typesArray.includes(t)) {
+		const fields = Object.keys(formState).map((key) => {
+			const { name, width, type, label, error } = formState[key];
+			const onChange = (e) => {
+				lib.onChangeHandler(e, dispatchFormState);
+			};
+
+			if (mostCommonTypes.includes(type)) {
 				return (
-					<Fieldset
-						key={formState[key].name}
-						width={formState[key].width}
-					>
-						<Input {...formState[key]} onChange={onChangeHandler} />
-					</Fieldset>
+					<F.Fieldset key={name} width={width}>
+						<F.Input {...formState[key]} onChange={onChange} />
+					</F.Fieldset>
 				);
-			} else if (t === "image") {
+			} else if (type === "image") {
 				return (
-					<Fieldset
-						key={formState[key].name}
-						width={formState[key].width}
-					>
-						<Label>{formState[key].label}</Label>
+					<F.Fieldset key={name} width={width}>
+						<F.Label>{label}</F.Label>
 						{context.loading ? (
 							<Spinner />
 						) : (
 							<ImageUpload
 								image={image}
 								setImage={setImage}
-								inputId={formState[key].name}
-								hasError={formState[key].error}
+								inputId={name}
+								hasError={error}
 							/>
 						)}
-						{formState[key].error && (
-							<Error>{formState[key].error}</Error>
-						)}
-					</Fieldset>
+						{error && <F.Error>{error}</F.Error>}
+					</F.Fieldset>
 				);
-			} else if (t === "select") {
+			} else if (type === "select") {
 				return (
-					<Fieldset
-						key={formState[key].name}
-						width={formState[key].width}
-					>
-						<Select
-							{...formState[key]}
-							onChange={onChangeHandler}
-						/>
-					</Fieldset>
+					<F.Fieldset key={name} width={width}>
+						<F.Select {...formState[key]} onChange={onChange} />
+					</F.Fieldset>
 				);
 			} else {
 				return null;
@@ -205,62 +105,48 @@ const useForm = (
 		setFields(fields);
 	};
 
-	const getSubmit = () => {
-		return (
-			<Submit submitable={submitable}>
-				{submitLabel === "" ? "Submit" : submitLabel}
-			</Submit>
-		);
-	};
-
 	const getForm = () => {
+		const { errors } = formState;
+
 		const form = (
 			<div className="h-full">
-				<FormTitle>
+				<F.FormTitle>
 					{formTitle === "" ? "Mellon Form" : formTitle}
-				</FormTitle>
-				<FContainer formType={formType}>
-					<Form onSubmit={onSubmit}>
+				</F.FormTitle>
+				<F.FContainer formType={formType}>
+					<F.Form onSubmit={onSubmit} generalError={errors.general}>
+						{errors.general && (
+							<F.Error general>{errors.general}</F.Error>
+						)}
+
 						{fields}
-						{getSubmit()}
-					</Form>
-				</FContainer>
+
+						<F.Submit submitable={submitable}>
+							{submitLabel === "" ? "Submit" : submitLabel}
+						</F.Submit>
+					</F.Form>
+				</F.FContainer>
 			</div>
 		);
 
 		setForm(form);
 	};
 
-	const setErrors = (errors) => {
-		Object.keys(errors).forEach((key) => {
-			dispatch({
-				type: "SET_ERROR",
-				payload: {
-					name: key,
-					value: errors[key],
-				},
-			});
-		});
+	return {
+		form: form,
+		image: image,
+		setErrors: (errors) => lib.setErrors(errors, dispatchFormState),
+		resetForm: () =>
+			lib.resetForm(
+				formFields,
+				formType,
+				formState,
+				image,
+				dispatchFormState,
+				setSubmitable
+			),
+		getNameValuePairs: () => lib.getNameValuePairs(formState),
 	};
-
-	const reset = () => {
-		const state = getFormState(formFields);
-		dispatch({
-			type: "RESET_FORM",
-			payload: state,
-		});
-		updateSubmitable();
-	};
-
-	const getNVPairs = () => {
-		const pairs = {};
-		Object.keys(formState).forEach((key) => {
-			pairs[key] = formState[key].value;
-		});
-		return pairs;
-	};
-
-	return [form, image, setErrors, reset, getNVPairs];
 };
 
 export default useForm;

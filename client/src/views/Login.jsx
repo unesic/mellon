@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/client";
 
-import { AuthContext } from "../lib/AuthContext";
-import { USER_LOGIN } from "../lib/graphql/userQueries";
+import { AuthContext } from "lib/AuthContext";
+import { USER_LOGIN } from "lib/graphql/userQueries";
 
-import useForm from "../lib/hooks/useForm";
-import formData from "../lib/json/loginFormData.json";
+import useForm from "lib/hooks/useForm";
+import formData from "lib/json/loginFormData.json";
 
 const Login = ({ history, location }) => {
 	const context = useContext(AuthContext);
@@ -15,14 +15,17 @@ const Login = ({ history, location }) => {
 		await login();
 	};
 
-	const [form, _, setErrors, reset, getNVPairs] = useForm(formData, onSubmit);
+	const { form, setErrors, resetForm, getNameValuePairs } = useForm(
+		formData,
+		onSubmit
+	);
 
 	const [login] = useMutation(USER_LOGIN, {
-		variables: { ...getNVPairs() },
+		variables: { ...getNameValuePairs() },
 		onCompleted({ login: userData }) {
 			context.login(userData);
 
-			reset();
+			resetForm();
 
 			if (location.state && location.state.from.pathname !== "logout") {
 				history.push(location.state.from.pathname);

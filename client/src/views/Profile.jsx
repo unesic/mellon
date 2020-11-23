@@ -1,38 +1,39 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 
-import { AuthContext } from "../lib/AuthContext";
-import { USER_UPDATE } from "../lib/graphql/userQueries";
-import { FILE_UPLOAD } from "../lib/graphql/fileQueries";
+import { AuthContext } from "lib/AuthContext";
+import { USER_UPDATE } from "lib/graphql/userQueries";
+import { FILE_UPLOAD } from "lib/graphql/fileQueries";
 
-import useForm from "../lib/hooks/useForm";
-import formDataJson from "../lib/json/profileFormData.json";
+import useForm from "lib/hooks/useForm";
+import formDataJson from "lib/json/profileFormData.json";
 
 const Profile = ({ history, location }) => {
 	const context = useContext(AuthContext);
-	let formData = formDataJson;
+	const formDataRef = useRef(formDataJson);
 
 	useEffect(() => {
-		const { formFields } = formData;
+		const { formFields } = formDataRef.current;
 		const newFormFields = formFields
 			.map((f) => {
 				if (context.user[f.name]) {
-					return (f.placeholder = context.user[f.name]);
+					f.placeholder = context.user[f.name];
 				}
+
+				return f;
 			})
 			.filter(Boolean);
-		formData = { ...newFormFields };
+			
+		formDataRef.current.formFields = [...newFormFields];
 	}, [context.user]);
 
 	const [update] = useMutation(USER_UPDATE, {
 		onCompleted({ update: userData }) {
 			context.login(userData);
+			resetForm();
 
-			reset();
-
-			if (location.state && location.state.from.pathname !== "logout") {
+			if (location.state && location.state.from.pathname !== "logout")
 				history.push(location.state.from.pathname);
-			}
 		},
 		onError(err) {
 			setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -43,7 +44,7 @@ const Profile = ({ history, location }) => {
 		async onCompleted({ singleUpload }) {
 			await update({
 				variables: {
-					...getNVPairs(),
+					...getNameValuePairs(),
 					id: context.user.id,
 					image: singleUpload.id,
 				},
@@ -62,15 +63,15 @@ const Profile = ({ history, location }) => {
 		} else {
 			await update({
 				variables: {
-					...getNVPairs(),
+					...getNameValuePairs(),
 					id: context.user.id,
 				},
 			});
 		}
 	};
 
-	const [form, image, setErrors, reset, getNVPairs] = useForm(
-		formData,
+	const { form, image, setErrors, resetForm, getNameValuePairs } = useForm(
+		formDataRef.current,
 		onSubmit
 	);
 

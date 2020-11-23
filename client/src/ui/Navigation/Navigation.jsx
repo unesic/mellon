@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { FaSeedling, FaUser } from "react-icons/fa";
+import { BsGearWideConnected } from "react-icons/bs";
 
-import { AuthContext } from "../../lib/AuthContext";
-import UserAvatar from "../../ui/UserAvatar/UserAvatar";
-
+import { AuthContext } from "lib/AuthContext";
+import UserAvatar from "ui/UserAvatar/UserAvatar";
 import classes from "./Navigation.classes";
 
 const Navigation = React.memo(() => {
@@ -23,10 +23,18 @@ const Navigation = React.memo(() => {
 						<NavLink
 							to="/"
 							exact
-							className={classes.navLink}
+							className={`${classes.navLink} ${classes.navLinkNotDone}`}
 							activeClassName={classes.navLinkActive}
 						>
-							App
+							Daily tracking
+						</NavLink>
+						<NavLink
+							to="/analytics"
+							exact
+							className={`${classes.navLink} ${classes.navLinkNotDone}`}
+							activeClassName={classes.navLinkActive}
+						>
+							Analytics dashboard
 						</NavLink>
 					</div>
 				</div>
@@ -52,14 +60,14 @@ const Navigation = React.memo(() => {
 							<>
 								<NavLink
 									to="/profile"
-									className={classes.navLink}
+									className={`${classes.navLink} ${classes.navLinkDone}`}
 									activeClassName={classes.navLinkActive}
 								>
 									Profile
 								</NavLink>
 								<a
 									href="/logout"
-									className={classes.navLink}
+									className={`${classes.navLink} ${classes.navLinkDone}`}
 									onClick={(e) => {
 										e.preventDefault();
 										context.logout();
@@ -73,20 +81,50 @@ const Navigation = React.memo(() => {
 							<>
 								<NavLink
 									to="/register"
-									className={classes.navLink}
+									className={`${classes.navLink} ${classes.navLinkDone}`}
 									activeClassName={classes.navLinkActive}
 								>
 									Register
 								</NavLink>
 								<NavLink
 									to="/login"
-									className={classes.navLink}
+									className={`${classes.navLink} ${classes.navLinkDone}`}
 									activeClassName={classes.navLinkActive}
 								>
 									Login
 								</NavLink>
 							</>
 						)}
+					</div>
+				</div>
+				<div className={classes.section}>
+					<header className={classes.header}>
+						<BsGearWideConnected className={classes.headerIcon} />
+						Settings
+					</header>
+
+					<div className={classes.links}>
+						<NavLink
+							to="/user-settings"
+							className={`${classes.navLink} ${classes.navLinkNotDone}`}
+							activeClassName={classes.navLinkActive}
+						>
+							User settings
+						</NavLink>
+						<NavLink
+							to="/user-settings"
+							className={`${classes.navLink} ${classes.navLinkNotDone}`}
+							activeClassName={classes.navLinkActive}
+						>
+							App settings
+						</NavLink>
+						<NavLink
+							to="/user-settings"
+							className={`${classes.navLink} ${classes.navLinkNotDone}`}
+							activeClassName={classes.navLinkActive}
+						>
+							Privacy settings
+						</NavLink>
 					</div>
 				</div>
 			</div>

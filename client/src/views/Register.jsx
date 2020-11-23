@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useMutation } from "@apollo/client";
 
-import { AuthContext } from "../lib/AuthContext";
-import { USER_REGISTER } from "../lib/graphql/userQueries";
-import { FILE_UPLOAD } from "../lib/graphql/fileQueries";
+import { AuthContext } from "lib/AuthContext";
+import { USER_REGISTER } from "lib/graphql/userQueries";
+import { FILE_UPLOAD } from "lib/graphql/fileQueries";
 
-import useForm from "../lib/hooks/useForm";
-import formData from "../lib/json/registerFormData.json";
+import useForm from "lib/hooks/useForm";
+import formData from "lib/json/registerFormData.json";
 
 const Register = ({ history, location }) => {
 	const context = useContext(AuthContext);
@@ -15,7 +15,7 @@ const Register = ({ history, location }) => {
 		onCompleted({ register: userData }) {
 			context.login(userData);
 
-			reset();
+			resetForm();
 
 			if (location.state && location.state.from.pathname !== "logout") {
 				history.push(location.state.from.pathname);
@@ -32,7 +32,7 @@ const Register = ({ history, location }) => {
 		async onCompleted({ singleUpload }) {
 			await register({
 				variables: {
-					...getNVPairs(),
+					...getNameValuePairs(),
 					image: singleUpload.id,
 				},
 			});
@@ -50,13 +50,13 @@ const Register = ({ history, location }) => {
 		} else {
 			await register({
 				variables: {
-					...getNVPairs(),
+					...getNameValuePairs(),
 				},
 			});
 		}
 	};
 
-	const [form, image, setErrors, reset, getNVPairs] = useForm(
+	const { form, image, setErrors, resetForm, getNameValuePairs } = useForm(
 		formData,
 		onSubmit
 	);

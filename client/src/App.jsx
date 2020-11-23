@@ -1,15 +1,14 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import PrivateRoute from "./lib/PrivateRoute";
-import PublicRoute from "./lib/PublicRoute";
-
-import Navigation from "./ui/Navigation/Navigation";
-import Homepage from "./views/Homepage";
-import Register from "./views/Register";
-import Login from "./views/Login";
-import Logout from "./views/Logout";
-import Profile from "./views/Profile";
+import Navigation from "ui/Navigation/Navigation";
+import PrivateRoute from "lib/PrivateRoute";
+import PublicRoute from "lib/PublicRoute";
+import Homepage from "views/Homepage";
+import Register from "views/Register";
+import Login from "views/Login";
+import Logout from "views/Logout";
+import Profile from "views/Profile";
 
 const App = () => {
 	return (

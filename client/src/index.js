@@ -4,14 +4,16 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import "./lib/objFilter";
+import "lib/objFilter";
 
-import { AuthProvider } from "./lib/AuthContext";
-import App from "./App";
+import { AuthProvider } from "lib/AuthContext";
+import App from "App";
 
 const client = new ApolloClient({
 	cache: new InMemoryCache(),
-	link: createUploadLink({ uri: `${process.env.REACT_APP_SERVER_URL}/graphql` }),
+	link: createUploadLink({
+		uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
+	}),
 });
 
 ReactDOM.render(

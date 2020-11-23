@@ -49,6 +49,10 @@ Classes.navLink = [
 	"ease-in-out",
 ].join(" ");
 
+Classes.navLinkDone = ["border-l-2", "border-teal-400"].join(" ");
+
+Classes.navLinkNotDone = ["border-r-2", "border-red-500"].join(" ");
+
 Classes.navLinkActive = ["text-teal-400"].join(" ");
 
 Classes.username = ["pl-2"].join(" ");
