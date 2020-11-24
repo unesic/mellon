@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactCalendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 
-const Calendar = () => {
-	const [date, setDate] = useState(new Date());
-
+const Calendar = ({ date, setDate }) => {
 	return (
-		<div>
+		<div className="Calendar__Wrapper">
 			<ReactCalendar
 				onChange={setDate}
 				value={date}
-				className="CalendarContainer"
-				tileClassName="CalendarTile"
+				className="Calendar__Container"
+				tileClassName="Calendar__Tile"
 			/>
 		</div>
 	);

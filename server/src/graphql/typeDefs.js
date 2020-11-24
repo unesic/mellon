@@ -64,6 +64,8 @@ module.exports = gql`
 
 		getLogTypes: [LogType]
 		getLogType(typeId: ID!): LogType!
+		getUserLogTypes: [LogType]
+		getLogTypeSubTypes(typeId: ID!): [LogSubType]
 
 		getLogSubTypes: [LogSubType]
 		getLogSubType(subtypeId: ID!): LogSubType

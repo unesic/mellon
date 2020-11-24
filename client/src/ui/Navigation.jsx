@@ -22,10 +22,18 @@ const Navigation = React.memo(() => {
 						<NavLink
 							to="/"
 							exact
-							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							className="Navigation__NavLink Navigation__NavLinkInProgress"
 							activeClassName="Navigation__NavLinkActive"
 						>
 							Daily tracking
+						</NavLink>
+						<NavLink
+							to="/my-types"
+							exact
+							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							activeClassName="Navigation__NavLinkActive"
+						>
+							Types &amp; Subtypes
 						</NavLink>
 						<NavLink
 							to="/analytics"

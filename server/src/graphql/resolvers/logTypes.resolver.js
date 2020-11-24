@@ -26,6 +26,30 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
+		getUserLogTypes: async (parent, args, context) => {
+			const user = checkAuth(context);
+
+			try {
+				const types = await LogTypes.find({ userId: user.id });
+				return types;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
+		getLogTypeSubTypes: async (_, { typeId }) => {
+			console.log(typeId);
+			try {
+				const type = await LogTypes.findById(typeId);
+				const logSubTypes = await LogSubTypes.find()
+					.where("_id")
+					.in(type.subtypes)
+					.exec();
+
+				return logSubTypes;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 	},
 
 	Mutation: {

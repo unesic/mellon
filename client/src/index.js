@@ -1,20 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import reportWebVitals from "./reportWebVitals";
+
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
-import reportWebVitals from "./reportWebVitals";
-// import "./index.css";
+import { setContext } from "@apollo/client/link/context";
+
 import "assets/main.css";
 import "lib/objFilter";
 
 import { AuthProvider } from "lib/AuthContext";
 import App from "App";
 
+const authLink = setContext((_, { headers }) => {
+	const token = localStorage.getItem("auth-token");
+	return {
+		headers: {
+			...headers,
+			authorization: token ? `Bearer ${token}` : "",
+		},
+	};
+});
+
 const client = new ApolloClient({
+	link: authLink.concat(
+		createUploadLink({
+			uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
+		})
+	),
 	cache: new InMemoryCache(),
-	link: createUploadLink({
-		uri: `${process.env.REACT_APP_SERVER_URL}/graphql`,
-	}),
 });
 
 ReactDOM.render(

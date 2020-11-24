@@ -1,0 +1,82 @@
+/* Wrapping div */
+.Calendar__Wrapper {
+	@apply mr-4 mb-4;
+}
+
+/* Container */
+.Calendar__Container {
+	@apply rounded p-6 shadow-lg bg-white w-96;
+}
+
+/* Navigation container */
+.Calendar__Container .react-calendar__navigation {
+	@apply mb-5 items-center;
+}
+
+/* Navigation buttons */
+.Calendar__Container .react-calendar__navigation .react-calendar__navigation__arrow {
+	@apply rounded-full bg-gray-200 w-6 mx-1 text-gray-600;
+}
+
+/* Navigation month */
+.Calendar__Container .react-calendar__navigation__label {
+	@apply text-xl font-semibold text-gray-900;
+}
+
+/* Week days wrapper */
+.Calendar__Container .react-calendar__month-view__weekdays__weekday {
+	@apply text-sm text-gray-900;
+}
+
+/* Week days text */
+.Calendar__Container .react-calendar__month-view__weekdays__weekday abbr {
+	@apply no-underline;
+}
+
+/* Base style for tiles */
+.Calendar__Tile {
+	@apply flex justify-center items-center bg-gray-500 text-white;
+}
+
+/* Century view - decade */
+.Calendar__Tile.react-calendar__century-view__decades__decade {
+	flex-basis: calc(33.33333% - 0.5rem) !important;
+	max-width: calc(33.33333% - 0.5rem) !important;
+	@apply flex justify-center items-center rounded bg-gray-500 text-white py-4 shadow m-1;
+}
+
+/* Decade view - year */
+.Calendar__Tile.react-calendar__decade-view__years__year {
+	flex-basis: calc(25% - 0.5rem) !important;
+	max-width: calc(25% - 0.5rem) !important;
+	@apply flex justify-center items-center rounded bg-gray-500 text-white py-4 shadow m-1;
+}
+
+/* Year view - month */
+.Calendar__Tile.react-calendar__year-view__months__month {
+	flex-basis: calc(33.33333% - 0.5rem) !important;
+	max-width: calc(33.33333% - 0.5rem) !important;
+	@apply rounded px-2 py-4 m-1 shadow;
+}
+
+/* Month view - day */
+.Calendar__Tile.react-calendar__month-view__days__day {
+	flex-basis: calc(100% / 7 - 1rem) !important;
+	max-width: calc(100% / 7 - 1rem) !important;
+	@apply mr-4 mt-2 w-8 h-8 rounded-full text-xs;
+}
+
+/* Month view - day - neighbor */
+.Calendar__Tile.react-calendar__month-view__days__day--neighboringMonth {
+	@apply bg-gray-300 text-gray-700;
+}
+
+/* Active tile */
+.Calendar__Tile.react-calendar__tile--hasActive,
+.Calendar__Tile.react-calendar__tile--active {
+	@apply bg-teal-400;
+}
+
+.Calendar__Tile.react-calendar__tile--now:not(.react-calendar__tile--active) {
+	@apply bg-teal-500;
+}

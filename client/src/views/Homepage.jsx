@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Calendar from "components/Calendar";
-import NewEntry from "components/NewEntry";
-import Entries from "components/Entries";
+import Tracking from "components/Tracking";
 
 const Homepage = () => {
+	const [date, setDate] = useState(new Date());
 	return (
-		<div>
-			<Calendar />
-			<NewEntry />
-			<Entries />
+		<div className="flex flex-wrap">
+			<Calendar date={date} setDate={setDate} />
+			<Tracking currentDay={date} />
 		</div>
 	);
 };

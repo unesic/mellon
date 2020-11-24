@@ -13,10 +13,10 @@ import Profile from "views/Profile";
 const App = () => {
 	return (
 		<BrowserRouter>
-			<nav className="w-64">
+			<nav className="Navigation__Wrapper">
 				<Navigation />
 			</nav>
-			<main className="flex-grow p-3">
+			<main className="Main__Wrapper">
 				<Switch>
 					<Route exact path="/" component={Homepage} />
 					<PublicRoute path="/register" component={Register} />

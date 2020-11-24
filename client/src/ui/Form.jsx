@@ -148,6 +148,8 @@ export const Select = React.memo(
 		label,
 		withLabel = true,
 		error,
+		styles = null,
+		noDefaultOption = false,
 	}) => {
 		return (
 			<>
@@ -158,13 +160,18 @@ export const Select = React.memo(
 					value={value || placeholder}
 					onChange={onChange}
 					className={`${"Form__Input"} ${
-						value === "" ? "Form__SelectPlaceholder" : null
-					}`}
+						value === "" ? "Form__SelectPlaceholder" : ""
+					} ${styles ? styles : ""}`.trim()}
 				>
-					<option value="">Select one...</option>
+					{!noDefaultOption ? (
+						<option value="">
+							{placeholder || "Select one..."}
+						</option>
+					) : null}
+
 					{options.map((o) => (
-						<option value={o.value} key={o.value}>
-							{o.label}
+						<option value={o.value || o.id} key={o.value || o.id}>
+							{o.label || o.name}
 						</option>
 					))}
 				</select>
@@ -174,17 +181,19 @@ export const Select = React.memo(
 	}
 );
 
-export const Submit = React.memo(({ submitable = true, children }) => {
-	return (
-		<button
-			type="submit"
-			className={submitable ? "Form__Button" : "Form__ButtonDisabled"}
-			disabled={!submitable}
-		>
-			{children}
-		</button>
-	);
-});
+export const Submit = React.memo(
+	({ type = "submit", submitable = true, children }) => {
+		return (
+			<button
+				type={type}
+				className={submitable ? "Form__Button" : "Form__ButtonDisabled"}
+				disabled={!submitable}
+			>
+				{children}
+			</button>
+		);
+	}
+);
 
 export const AdditionalText = React.memo(({ children }) => {
 	return <p className="Form__AdditionalText">{children}</p>;

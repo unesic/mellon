@@ -1,9 +1,17 @@
+.Navigation__Wrapper {
+	@apply w-64;
+}
+
+.Main__Wrapper {
+	@apply flex-1 p-3;
+}
+
 .Navigation__Container {
 	@apply h-full p-3;
 }
 
 .Navigation__ContainerInner {
-	@apply p-2 border border-solid border-gray-400 rounded bg-gray-100;
+	@apply p-2 rounded bg-white shadow-lg;
 }
 
 .Navigation__Section {
@@ -36,6 +44,10 @@
 
 .Navigation__NavLinkDone {
 	@apply border-l-2 border-teal-400;
+}
+
+.Navigation__NavLinkInProgress {
+	@apply border-l-2 border-orange-400;
 }
 
 .Navigation__NavLinkNotDone {
