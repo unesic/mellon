@@ -3,15 +3,15 @@
 }
 
 .Main__Wrapper {
-	@apply flex-1 p-3;
+	@apply flex-1 p-4;
 }
 
 .Navigation__Container {
-	@apply h-full p-3;
+	@apply h-full p-4;
 }
 
 .Navigation__ContainerInner {
-	@apply p-2 rounded bg-white shadow-lg;
+	@apply fixed w-56 p-2 rounded bg-white shadow-lg;
 }
 
 .Navigation__Section {

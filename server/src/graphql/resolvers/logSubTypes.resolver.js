@@ -26,16 +26,29 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
+		getLogSubTypesFromIds: async (_, { ids }) => {
+			try {
+				const subtypes = await LogSubTypes.find()
+					.where("_id")
+					.in(ids)
+					.exec();
+
+				return subtypes;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 	},
 
 	Mutation: {
-		createLogSubType: async (_, { typeId, name }, context) => {
+		createLogSubType: async (_, { typeId, name, color }, context) => {
 			const user = checkAuth(context);
 
 			const newSubtype = new LogSubTypes({
 				userId: user.id,
 				typeId,
 				name,
+				color,
 			});
 
 			const subtype = await newSubtype.save();
@@ -50,7 +63,7 @@ module.exports = {
 
 			return subtype;
 		},
-		updateLogSubType: async (_, { name }, context) => {},
+		updateLogSubType: async (_, { name, color }, context) => {},
 		deleteLogSubType: async (_, { subtypeId }, context) => {
 			const user = checkAuth(context);
 

@@ -37,7 +37,6 @@ module.exports = {
 			}
 		},
 		getLogTypeSubTypes: async (_, { typeId }) => {
-			console.log(typeId);
 			try {
 				const type = await LogTypes.findById(typeId);
 				const logSubTypes = await LogSubTypes.find()
@@ -53,18 +52,19 @@ module.exports = {
 	},
 
 	Mutation: {
-		createLogType: async (_, { name }, context) => {
+		createLogType: async (_, { name, color }, context) => {
 			const user = checkAuth(context);
 
 			const newType = new LogTypes({
 				userId: user.id,
 				name,
+				color,
 			});
 
 			const type = await newType.save();
 			return type;
 		},
-		updateLogType: async (_, { name }, context) => {},
+		updateLogType: async (_, { name, color }, context) => {},
 		deleteLogType: async (_, { typeId }, context) => {
 			const user = checkAuth(context);
 

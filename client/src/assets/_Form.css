@@ -42,6 +42,12 @@
 	@apply rounded py-1 px-2 bg-white border border-solid border-gray-300;
 }
 
+input:focus,
+select:focus,
+.Form__Input:focus {
+	@apply outline-none shadow-outline-2;
+}
+
 .Form__InputHasErrors {
 	@apply border-red-600;
 }

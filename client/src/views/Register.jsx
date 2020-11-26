@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { useMutation } from "@apollo/client";
 
 import { AuthContext } from "lib/AuthContext";
-import { USER_REGISTER } from "lib/graphql/userQueries";
-import { FILE_UPLOAD } from "lib/graphql/fileQueries";
+import { USER_REGISTER } from "lib/graphql/user.queries";
+import { FILE_UPLOAD } from "lib/graphql/file.queries";
 
 import useForm from "lib/hooks/useForm";
 import formData from "lib/json/registerFormData.json";

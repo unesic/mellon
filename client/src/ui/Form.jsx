@@ -112,6 +112,8 @@ export const Input = React.memo(
 		label,
 		withLabel = true,
 		error,
+		styles = null,
+		style = {},
 	}) => {
 		return (
 			<>
@@ -126,11 +128,11 @@ export const Input = React.memo(
 					name={name}
 					className={`${"Form__Input"} ${
 						error ? "Form__InputHasErrors" : ""
-					}`}
+					} ${styles ? styles : ""}`.trim()}
 					onChange={onChange}
 					value={value}
 					placeholder={placeholder}
-					style={{ display: type === "checkbox" && "none" }}
+					style={{ display: type === "checkbox" && "none", ...style }}
 				/>
 				{error && <Error>{error}</Error>}
 			</>
@@ -149,6 +151,7 @@ export const Select = React.memo(
 		withLabel = true,
 		error,
 		styles = null,
+		style = {},
 		noDefaultOption = false,
 	}) => {
 		return (
@@ -162,6 +165,7 @@ export const Select = React.memo(
 					className={`${"Form__Input"} ${
 						value === "" ? "Form__SelectPlaceholder" : ""
 					} ${styles ? styles : ""}`.trim()}
+					style={{ ...style }}
 				>
 					{!noDefaultOption ? (
 						<option value="">
@@ -182,11 +186,13 @@ export const Select = React.memo(
 );
 
 export const Submit = React.memo(
-	({ type = "submit", submitable = true, children }) => {
+	({ type = "submit", submitable = true, styles = null, children }) => {
 		return (
 			<button
 				type={type}
-				className={submitable ? "Form__Button" : "Form__ButtonDisabled"}
+				className={`${
+					submitable ? "Form__Button" : "Form__ButtonDisabled"
+				} ${styles ? styles : ""}`.trim()}
 				disabled={!submitable}
 			>
 				{children}

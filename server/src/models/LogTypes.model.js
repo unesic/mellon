@@ -11,6 +11,7 @@ const logtypesSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		color: String,
 		subtypes: {
 			type: [Schema.Types.ObjectId],
 			ref: "LogSubTypes",

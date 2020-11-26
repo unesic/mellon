@@ -1,0 +1,19 @@
+.TimePicker .react-time-picker__wrapper {
+	@apply border-none rounded-2xl px-2 py-1 bg-teal-400;
+}
+
+.TimePicker .react-time-picker__inputGroup {
+	@apply px-1;
+}
+
+.TimePicker .react-time-picker__inputGroup__input,
+.TimePicker .react-time-picker__inputGroup__input::placeholder,
+.TimePicker .react-time-picker__inputGroup__divider,
+.TimePicker .react-time-picker__inputGroup__leadingZero {
+	@apply m-0 p-0 text-white text-sm font-semibold;
+}
+
+.TimePicker .react-time-picker__inputGroup__divider,
+.TimePicker .react-time-picker__inputGroup__input:not(.react-time-picker__inputGroup__amPm) {
+	@apply pr-0.5;
+}

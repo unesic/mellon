@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useLazyQuery } from "@apollo/client";
 
-import { GET_FILE } from "lib/graphql/fileQueries";
+import { GET_FILE } from "lib/graphql/file.queries";
 
 const initialState = { user: null, image: {}, loading: true };
 

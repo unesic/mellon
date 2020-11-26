@@ -24,7 +24,7 @@ const logsSchema = new Schema(
 		},
 		additional: String,
 		timestamp: {
-			type: Schema.Types.Date,
+			type: String,
 			required: true,
 		},
 	},

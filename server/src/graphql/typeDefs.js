@@ -13,6 +13,7 @@ module.exports = gql`
 		userId: ID!
 		typeId: ID!
 		name: String!
+		color: String
 	}
 
 	type LogType {
@@ -20,6 +21,7 @@ module.exports = gql`
 		userId: ID!
 		name: String!
 		subtypes: [ID]!
+		color: String
 	}
 
 	type Log {
@@ -28,8 +30,9 @@ module.exports = gql`
 		dayId: ID!
 		typeId: ID!
 		subtypeId: ID!
-		additional: String!
+		additional: String
 		timestamp: String!
+		createdAt: String!
 	}
 
 	type Day {
@@ -58,9 +61,11 @@ module.exports = gql`
 
 		getDays: [Day]
 		getDay(dayId: ID!): Day!
+		getDayFromDate(date: String!): Day
 
 		getLogs: [Log]
 		getLog(logId: ID!): Log!
+		getLogsByIds(ids: [ID!]): [Log!]
 
 		getLogTypes: [LogType]
 		getLogType(typeId: ID!): LogType!
@@ -69,6 +74,7 @@ module.exports = gql`
 
 		getLogSubTypes: [LogSubType]
 		getLogSubType(subtypeId: ID!): LogSubType
+		getLogSubTypesFromIds(ids: [ID!]): [LogSubType!]
 
 		getFile(fileId: ID!): File!
 	}
@@ -110,19 +116,24 @@ module.exports = gql`
 			timestamp: String!
 		): Log!
 		updateLog(
-			typeId: String
-			subtypeId: String
+			id: ID!
+			typeId: ID
+			subtypeId: ID
 			additional: String
 			timestamp: String
 		): Log!
 		deleteLog(logId: ID!): String!
 
-		createLogType(name: String!): LogType!
-		updateLogType(name: String, subtypes: [String!]): LogType!
+		createLogType(name: String!, color: String): LogType!
+		updateLogType(
+			name: String
+			color: String
+			subtypes: [String!]
+		): LogType!
 		deleteLogType(typeId: ID!): String!
 
-		createLogSubType(typeId: ID!, name: String!): LogSubType!
-		updateLogSubType(name: String!): LogSubType!
+		createLogSubType(typeId: ID!, name: String!, color: String): LogSubType!
+		updateLogSubType(name: String!, color: String): LogSubType!
 		deleteLogSubType(subtypeId: ID!): String!
 
 		singleUpload(file: Upload!): File!

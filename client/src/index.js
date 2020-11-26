@@ -6,7 +6,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import { setContext } from "@apollo/client/link/context";
 
-import "assets/main.css";
+import "assets/app.css";
 import "lib/objFilter";
 
 import { AuthProvider } from "lib/AuthContext";

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useMutation } from "@apollo/client";
 
 import { AuthContext } from "lib/AuthContext";
-import { USER_LOGIN } from "lib/graphql/userQueries";
+import { USER_LOGIN } from "lib/graphql/user.queries";
 
 import useForm from "lib/hooks/useForm";
 import formData from "lib/json/loginFormData.json";

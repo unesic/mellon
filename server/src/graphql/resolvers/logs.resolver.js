@@ -26,6 +26,14 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
+		getLogsByIds: async (_, { ids }) => {
+			try {
+				const logs = await Logs.find().where("_id").in(ids).exec();
+				return logs;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 	},
 
 	Mutation: {
@@ -57,7 +65,25 @@ module.exports = {
 
 			return log;
 		},
-		updateLog: async (_, { name }, context) => {},
+		updateLog: async (
+			_,
+			{ id, typeId, subtypeId, additional, timestamp },
+			context
+		) => {
+			const user = checkAuth(context);
+
+			try {
+				const log = await Logs.findByIdAndUpdate(
+					id,
+					{ typeId, subtypeId, additional, timestamp },
+					{ new: true }
+				);
+
+				return log;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 		deleteLog: async (_, { logId }, context) => {
 			const user = checkAuth(context);
 

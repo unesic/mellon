@@ -13,7 +13,7 @@ const daysSchema = new Schema(
 			required: false,
 			default: [],
 		},
-		date: Schema.Types.Date,
+		date: String,
 	},
 	{
 		timestamps: true,

@@ -26,6 +26,20 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
+		getDayFromDate: async (_, { date }, context) => {
+			const user = checkAuth(context);
+
+			try {
+				const day = await Days.findOne({ userId: user.id, date: date });
+				if (day) {
+					return day;
+				} else {
+					throw new Error("Day not found");
+				}
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 	},
 
 	Mutation: {
