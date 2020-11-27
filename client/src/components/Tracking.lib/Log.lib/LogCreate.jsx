@@ -13,9 +13,9 @@ const LogCreate = ({ date }) => {
 		dispatch,
 	} = useContext(TrackingContext);
 
-	const getVariables = () => {
+	const getVariables = (dayId = null) => {
 		const variables = {
-			dayId: dayData.id,
+			dayId: dayId || dayData.id,
 			typeId: currType,
 			subtypeId: currSubType,
 			additional: additionalText,
@@ -24,13 +24,24 @@ const LogCreate = ({ date }) => {
 		if (moment(logTime).isValid()) {
 			variables.timestamp = logTime;
 		} else if (logTime === "current") {
+			const hours = moment().hours();
+			const minutes = moment().minutes();
+			const formatted = moment(date).hours(hours).minutes(minutes);
+			const timestamp = formatted.toISOString();
+
+			variables.timestamp = timestamp;
+
 			variables.timestamp = moment(new Date()).toISOString();
 		} else {
 			const [num, unit] = logTime.split("-");
 
-			variables.timestamp = moment(new Date())
-				.subtract(parseInt(num), unit)
-				.toISOString();
+			const hours = moment().hours();
+			const minutes = moment().minutes();
+			const formatted = moment(date).hours(hours).minutes(minutes);
+			const changed = formatted.subtract(parseInt(num), unit);
+			const timestamp = changed.toISOString();
+
+			variables.timestamp = timestamp;
 		}
 
 		return variables;
@@ -56,7 +67,7 @@ const LogCreate = ({ date }) => {
 				payload: createDay,
 			});
 
-			const variables = getVariables();
+			const variables = getVariables(createDay.id);
 			createLog({ variables });
 		},
 		onError(err) {

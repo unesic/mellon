@@ -63,7 +63,7 @@
 .Calendar__Tile.react-calendar__month-view__days__day {
 	flex-basis: calc(100% / 7 - 1rem) !important;
 	max-width: calc(100% / 7 - 1rem) !important;
-	@apply mr-4 mt-2 w-10 h-10 rounded-full text-sm;
+	@apply mr-4 mt-3 w-10 h-10 rounded-full text-sm;
 }
 
 /* Month view - day - neighbor */

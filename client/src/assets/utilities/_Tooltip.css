@@ -1,0 +1,21 @@
+.TooltipContainer {
+	@apply relative;
+}
+
+.TooltipText {
+	@apply absolute z-10 top-0 transform -translate-x-2 -translate-y-full;
+	@apply px-2 py-0.5 rounded bg-gray-700 shadow-md;
+	@apply font-normal text-gray-200 text-xs whitespace-no-wrap;
+	@apply transition-all ease-in-out duration-200 delay-75;
+	@apply invisible opacity-0;
+}
+
+.TooltipContainer:hover .TooltipText {
+	@apply visible opacity-100 delay-500;
+}
+
+.TooltipText::after {
+	content: "";
+	@apply absolute z-0 bottom-0 left-0 transform translate-x-2 translate-y-0.5 rotate-45;
+	@apply w-2 h-2 bg-gray-700 shadow-md;
+}

@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
+import moment from "moment";
 
 import { TrackingContext } from "lib/TrackingContext";
-
 import LogType from "./Log.lib/LogType";
 import LogSubType from "./Log.lib/LogSubType";
 import LogTime from "./Log.lib/LogTime";
 import LogAdditional from "./Log.lib/LogAdditional";
 import LogCreate from "./Log.lib/LogCreate";
 
-const NewLog = ({ date }) => {
+const NewLog = React.memo(({ date }) => {
 	const { dispatch } = useContext(TrackingContext);
 
 	const setCurrType = (e) => {
@@ -45,6 +45,10 @@ const NewLog = ({ date }) => {
 		});
 	};
 
+	const isDateSameMemo = useMemo(
+		() => moment().diff(date.toISOString(), "days") === 0
+	);
+
 	return (
 		<div className="DailyTracking__NewLogWrapper">
 			<h2 className="DailyTracking__Title">Add a new entry</h2>
@@ -53,11 +57,15 @@ const NewLog = ({ date }) => {
 				<LogType parent="new" onChange={setCurrType} />
 				<LogSubType parent="new" onChange={setCurrSubType} />
 				<LogAdditional parent="new" onChange={setLogAdditional} />
-				<LogTime parent="new" onChange={setLogTime} />
+				<LogTime
+					parent="new"
+					onChange={setLogTime}
+					notSameDay={!isDateSameMemo}
+				/>
 				<LogCreate date={date} />
 			</div>
 		</div>
 	);
-};
+});
 
 export default NewLog;

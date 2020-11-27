@@ -6,7 +6,7 @@ import Log from "./Log";
 
 import { TrackingContext } from "lib/TrackingContext";
 
-const Logs = () => {
+const Logs = React.memo(() => {
 	const {
 		state: { dayData },
 		dispatch,
@@ -57,13 +57,15 @@ const Logs = () => {
 	};
 
 	return (
-		<div className="DailyTracking__Entries">
+		<div className="DailyTracking__LogsContainer">
 			<h1 className="DailyTracking__Title">All entries</h1>
-			{logs.map((log) => (
-				<Log key={log.id} log={log} onDelete={onDelete} />
-			))}
+			<div className="DailyTracking__Logs">
+				{logs.map((log) => (
+					<Log key={log.id} log={log} onDelete={onDelete} />
+				))}
+			</div>
 		</div>
 	);
-};
+});
 
 export default Logs;

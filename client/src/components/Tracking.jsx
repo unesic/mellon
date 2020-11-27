@@ -11,7 +11,7 @@ import { TrackingContext } from "lib/TrackingContext";
 import NewLog from "./Tracking.lib/NewLog";
 import Logs from "./Tracking.lib/Logs";
 
-const Tracking = ({ currentDay }) => {
+const Tracking = React.memo(({ currentDay }) => {
 	const { dispatch } = useContext(TrackingContext);
 
 	const [getLogSubTypesFromIds] = useLazyQuery(GET_LOG_SUBTYPES_FROM_IDS, {
@@ -55,11 +55,6 @@ const Tracking = ({ currentDay }) => {
 				payload: getDayFromDate,
 			});
 		},
-		onError() {
-			dispatch({
-				type: "DAY_CHANGED",
-			});
-		},
 	});
 
 	useEffect(() => {
@@ -68,6 +63,9 @@ const Tracking = ({ currentDay }) => {
 	}, []);
 
 	useEffect(() => {
+		dispatch({
+			type: "DAY_CHANGED",
+		});
 		getDayFromDate();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentDay]);
@@ -84,6 +82,6 @@ const Tracking = ({ currentDay }) => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default Tracking;

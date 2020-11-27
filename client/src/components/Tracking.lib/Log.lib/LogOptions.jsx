@@ -1,44 +1,47 @@
 import React from "react";
 import { MdDelete, MdEdit, MdSave, MdCancel } from "react-icons/md";
 
-const LogOptions = ({ editing, onChange, onCancel, onSave, onDelete }) => {
-	return (
-		<div
-			className={`DailyTracking__LogOptionsWrapper${
-				editing ? " Editing" : ""
-			}`}
-		>
-			{!editing ? (
-				<button
-					className="DailyTracking__LogOption Edit"
-					onClick={onChange}
-				>
-					<MdEdit />
-				</button>
-			) : (
-				<>
+const LogOptions = React.memo(
+	({ editing, onChange, onCancel, onSave, onDelete }) => {
+		return (
+			<div
+				className={`DailyTracking__LogOptionsWrapper${
+					editing ? " Editing" : ""
+				}`}
+			>
+				{!editing ? (
 					<button
-						className="DailyTracking__LogOption Cancel"
-						onClick={onCancel}
+						className="DailyTracking__LogOption Edit"
+						onClick={onChange}
 					>
-						<MdCancel />
+						<MdEdit />
 					</button>
-					<button
-						className="DailyTracking__LogOption Save"
-						onClick={onSave}
-					>
-						<MdSave />
-					</button>
-					<button
-						className="DailyTracking__LogOption Remove"
-						onClick={onDelete}
-					>
-						<MdDelete />
-					</button>
-				</>
-			)}
-		</div>
-	);
-};
+				) : (
+					<>
+						<button
+							className="DailyTracking__LogOption Cancel"
+							onClick={onCancel}
+						>
+							<MdCancel />
+						</button>
+						<button
+							className="DailyTracking__LogOption Save"
+							onClick={onSave}
+						>
+							<MdSave />
+						</button>
+						<button
+							className="DailyTracking__LogOption Remove"
+							onClick={onDelete}
+						>
+							<MdDelete />
+						</button>
+					</>
+				)}
+			</div>
+		);
+	},
+	(prevProps, nextProps) => prevProps.editing === nextProps.editing
+);
 
 export default LogOptions;
