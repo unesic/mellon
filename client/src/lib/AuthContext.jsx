@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import { useLazyQuery } from "@apollo/client";
 
 import { GET_FILE } from "lib/graphql/file.queries";
+import { initialState as contextState, reducer } from "./AuthContext.lib";
 
 const initialState = { user: null, image: {}, loading: true };
 
@@ -16,44 +17,10 @@ if (localStorage.getItem("auth-token")) {
 	}
 }
 
-const AuthContext = createContext({
-	user: null,
-	image: {},
-	loading: true,
-	login: (data) => {},
-	logout: () => {},
-});
-
-const authReducer = (state, action) => {
-	switch (action.type) {
-		case "LOGIN":
-			return {
-				...state,
-				user: action.payload,
-			};
-		case "SET_IMAGE":
-			return {
-				...state,
-				image: action.payload,
-			};
-		case "SET_LOADING":
-			return {
-				...state,
-				loading: action.payload,
-			};
-		case "LOGOUT":
-			return {
-				...state,
-				user: null,
-				image: {},
-			};
-		default:
-			return state;
-	}
-};
+const AuthContext = createContext(contextState);
 
 const AuthProvider = (props) => {
-	const [state, dispatch] = useReducer(authReducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState);
 	const [getFile] = useLazyQuery(GET_FILE, {
 		onCompleted({ getFile: imageData }) {
 			dispatch({
