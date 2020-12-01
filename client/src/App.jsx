@@ -18,7 +18,7 @@ const App = () => {
 			</nav>
 			<main className="Main__Wrapper">
 				<Switch>
-					<Route exact path="/" component={Homepage} />
+					<PrivateRoute exact path="/" component={Homepage} />
 					<PublicRoute path="/register" component={Register} />
 					<PublicRoute path="/login" component={Login} />
 					<PrivateRoute path="/logout" component={Logout} />

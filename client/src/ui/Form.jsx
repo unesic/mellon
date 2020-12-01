@@ -174,7 +174,7 @@ export const Select = React.memo(
 					) : null}
 
 					{options.map((o) => (
-						<option value={o.value || o.id} key={o.value || o.id}>
+						<option value={o.value || o.id} key={o.value || o.id} disabled={!o.enabled || false}>
 							{o.label || o.name}
 						</option>
 					))}

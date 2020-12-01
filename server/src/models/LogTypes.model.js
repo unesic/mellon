@@ -18,6 +18,11 @@ const logtypesSchema = new Schema(
 			required: false,
 			default: [],
 		},
+		enabled: {
+			type: Boolean,
+			required: false,
+			default: true,
+		},
 	},
 	{
 		timestamps: true,

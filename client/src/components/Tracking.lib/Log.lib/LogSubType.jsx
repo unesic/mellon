@@ -20,35 +20,51 @@ const LogSubType = React.memo(
 
 		useEffect(() => {
 			if (parent === "new" && state.currType) {
-				setSubTypes(state.logSubTypes);
+				const subtypes = [];
+				state.logSubTypes.forEach((subtype) => {
+					if (subtype.typeId === state.currType) {
+						subtypes.push(subtype);
+					}
+				});
+				setSubTypes(subtypes);
 			}
 		}, [state.currType, state.logSubTypes]);
 
 		useEffect(() => {
 			if (parent === "entry" && currType && logSubTypes.length) {
-				setSubTypes(logSubTypes);
+				const subtypes = [];
+				logSubTypes.forEach((subtype) => {
+					if (subtype.typeId === currType) {
+						subtypes.push(subtype);
+					}
+				});
+				setSubTypes(subtypes);
 			}
 		}, [currType, logSubTypes]);
 
 		useEffect(() => {
-			if (subTypes.length && state.currSubType) {
-				const { color } = subTypes.find(
-					(type) => type.id === state.currSubType
-				);
-				setColor(color);
-			} else {
-				setColor("");
+			if (parent === "new") {
+				if (subTypes.length && state.currSubType) {
+					const { color } = subTypes.find(
+						(type) => type.id === state.currSubType
+					);
+					setColor(color);
+				} else {
+					setColor("");
+				}
 			}
 		}, [subTypes, state.currSubType]);
 
 		useEffect(() => {
-			if (subTypes.length && currSubType) {
-				const { color } = subTypes.find(
-					(type) => type.id === currSubType
-				);
-				setColor(color);
-			} else {
-				setColor("");
+			if (parent === "entry") {
+				if (subTypes.length && currSubType) {
+					const { color } = subTypes.find(
+						(type) => type.id === currSubType
+					);
+					setColor(color);
+				} else {
+					setColor("");
+				}
 			}
 		}, [subTypes, currSubType]);
 
@@ -63,7 +79,7 @@ const LogSubType = React.memo(
 							placeholder="Sub-type"
 							options={subTypes}
 							withLabel={false}
-							styles={`DailyTracking__SelectInput ${
+							styles={`DailyTracking__SelectInput WithTransition ${
 								state.currSubType ? "HasValue" : ""
 							}`}
 							style={{ backgroundColor: color ? color : null }}
@@ -76,7 +92,7 @@ const LogSubType = React.memo(
 							placeholder="Sub-type"
 							options={subTypes}
 							withLabel={false}
-							styles={`DailyTracking__SelectInput ${
+							styles={`DailyTracking__SelectInput WithTransition ${
 								currSubType ? "HasValue" : ""
 							}`}
 							style={{ backgroundColor: color ? color : null }}
@@ -84,7 +100,7 @@ const LogSubType = React.memo(
 					) : null
 				) : (
 					<div
-						className="DailyTracking__SelectInput"
+						className="DailyTracking__SelectInput WithTransition"
 						style={{ backgroundColor: data.color || null }}
 					>
 						{data.name}

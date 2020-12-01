@@ -1,9 +1,9 @@
 .Navigation__Wrapper {
-	@apply w-64;
+	@apply fixed w-80 h-full;
 }
 
 .Main__Wrapper {
-	@apply flex-1 p-4;
+	@apply flex-1 p-4 pl-80;
 }
 
 .Navigation__Container {
@@ -11,7 +11,7 @@
 }
 
 .Navigation__ContainerInner {
-	@apply fixed w-56 p-2 rounded bg-white shadow-lg;
+	@apply p-2 rounded bg-white shadow-lg;
 }
 
 .Navigation__Section {

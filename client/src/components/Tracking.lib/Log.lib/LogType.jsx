@@ -18,30 +18,36 @@ const LogType = React.memo(
 		const [color, setColor] = useState("");
 
 		useEffect(() => {
-			setTypes(state.logTypes);
+			if (parent === "new") setTypes(state.logTypes);
 		}, [state.logTypes]);
 
 		useEffect(() => {
-			if (logTypes.length) setTypes(logTypes);
+			if (parent === "entry" && logTypes.length) setTypes(logTypes);
 		}, [logTypes]);
 
 		useEffect(() => {
-			if (types.length && state.currType) {
-				const { color } = types.find(
-					(type) => type.id === state.currType
-				);
-				setColor(color);
-			} else {
-				setColor("");
+			if (parent === "new") {
+				if (types.length && state.currType) {
+					const { color } = types.find(
+						(type) => type.id === state.currType
+					);
+					setColor(color);
+				} else {
+					setColor("");
+				}
 			}
 		}, [types, state.currType]);
 
 		useEffect(() => {
-			if (types.length && currType) {
-				const { color } = types.find((type) => type.id === currType);
-				setColor(color);
-			} else {
-				setColor("");
+			if (parent === "entry") {
+				if (types.length && currType) {
+					const { color } = types.find(
+						(type) => type.id === currType
+					);
+					setColor(color);
+				} else {
+					setColor("");
+				}
 			}
 		}, [types, currType]);
 
@@ -56,7 +62,7 @@ const LogType = React.memo(
 							placeholder="Type"
 							options={types}
 							withLabel={false}
-							styles={`DailyTracking__SelectInput ${
+							styles={`DailyTracking__SelectInput WithTransition ${
 								state.currType ? "HasValue" : ""
 							}`}
 							style={{ backgroundColor: color ? color : null }}
@@ -69,7 +75,7 @@ const LogType = React.memo(
 							placeholder="Type"
 							options={types}
 							withLabel={false}
-							styles={`DailyTracking__SelectInput ${
+							styles={`DailyTracking__SelectInput WithTransition ${
 								currType ? "HasValue" : ""
 							}`}
 							style={{ backgroundColor: color ? color : null }}
@@ -77,7 +83,7 @@ const LogType = React.memo(
 					)
 				) : (
 					<div
-						className="DailyTracking__SelectInput"
+						className="DailyTracking__SelectInput WithTransition"
 						style={{ backgroundColor: data.color || null }}
 					>
 						{data.name}

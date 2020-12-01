@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMutation } from "@apollo/client";
 
 import { UPDATE_LOG } from "lib/graphql/log.queries";
@@ -12,6 +12,7 @@ import LogTime from "./Log.lib/LogTime";
 
 const Log = React.memo(
 	({
+		idx,
 		log: { id, typeId, subtypeId, additional, timestamp, createdAt },
 		onDelete,
 	}) => {
@@ -19,7 +20,7 @@ const Log = React.memo(
 			state: { logTypes, logSubTypes },
 		} = useContext(TrackingContext);
 		const [editing, setEditing] = useState(false);
-		const [log, setLog] = useState({
+		const [logState, setLogState] = useState({
 			id,
 			typeId,
 			subtypeId,
@@ -27,16 +28,24 @@ const Log = React.memo(
 			timestamp,
 		});
 		const prevRef = useRef({});
-		const { name: typeName, color: typeColor } = logTypes.find(
-			(t) => t.id === typeId
-		);
-		const { name: subtypeName, color: subtypeColor } = logSubTypes.find(
-			(t) => t.id === subtypeId
-		);
+		const [typeData, setTypeData] = useState({
+			type: logTypes.find((t) => t.id === typeId),
+			subtype: logSubTypes.find((t) => t.id === subtypeId),
+		});
+
+		useEffect(() => {
+			setTypeData({
+				type: logTypes.find((t) => t.id === typeId),
+				subtype: logSubTypes.find((t) => t.id === subtypeId),
+			});
+		}, [logTypes, logSubTypes]);
 
 		const [updateLog] = useMutation(UPDATE_LOG, {
-			onCompleted({ updateLog }) {
-				console.log(updateLog);
+			onCompleted({ updateLog: { typeId, subtypeId } }) {
+				setTypeData({
+					type: logTypes.find((t) => t.id === typeId),
+					subtype: logSubTypes.find((t) => t.id === subtypeId),
+				});
 			},
 			onError(err) {
 				console.error(JSON.stringify(err, null, 2));
@@ -46,7 +55,7 @@ const Log = React.memo(
 		const changeMode = () => {
 			if (!editing) {
 				setEditing(true);
-				prevRef.current = { ...log };
+				prevRef.current = { ...logState };
 			} else {
 				setEditing(false);
 			}
@@ -55,9 +64,10 @@ const Log = React.memo(
 		const onLogTypeChange = (e) => {
 			const newType = logTypes.find((t) => t.id === e.target.value);
 			if (newType) {
-				setLog({
-					...log,
+				setLogState({
+					...logState,
 					typeId: newType.id,
+					subtypeId: null,
 				});
 			}
 		};
@@ -65,71 +75,81 @@ const Log = React.memo(
 		const onLogSubTypeChange = (e) => {
 			const newSubType = logSubTypes.find((t) => t.id === e.target.value);
 			if (newSubType) {
-				setLog({
-					...log,
+				setLogState({
+					...logState,
 					subtypeId: newSubType.id,
 				});
 			}
 		};
 
 		const onLogAdditionalChange = (e) => {
-			setLog({
-				...log,
+			setLogState({
+				...logState,
 				additional: e.target.value,
 			});
 		};
 
 		const onLogTimeChange = (newTimestamp) => {
-			setLog({
-				...log,
+			setLogState({
+				...logState,
 				timestamp: newTimestamp,
 			});
 		};
 
 		const saveChanges = () => {
-			// TODO: Make an API call to db to update log
 			updateLog({
-				variables: { ...log },
+				variables: { ...logState },
 			});
 			setEditing(false);
 		};
 
 		const cancel = () => {
-			setLog({ ...prevRef.current });
+			setLogState({ ...prevRef.current });
 			prevRef.current = {};
 			setEditing(false);
 		};
 
 		return (
 			<div className="DailyTracking__Log">
-				<LogCreatedAt editing={editing} timestamp={createdAt} />
+				<LogCreatedAt
+					editing={editing}
+					timestamp={createdAt}
+					idx={idx}
+				/>
 				<LogType
-					currType={log.typeId}
+					currType={logState.typeId}
 					logTypes={logTypes}
 					onChange={onLogTypeChange}
 					editing={editing}
-					data={{ name: typeName, color: typeColor }}
+					data={{
+						name: typeData.type.name,
+						color: typeData.type.color,
+					}}
 				/>
 				<LogSubType
-					currType={log.typeId}
-					currSubType={log.subtypeId}
+					currType={logState.typeId}
+					currSubType={logState.subtypeId}
 					logSubTypes={logSubTypes}
 					onChange={onLogSubTypeChange}
 					editing={editing}
-					data={{ name: subtypeName, color: subtypeColor }}
+					data={{
+						name: typeData.subtype.name,
+						color: typeData.subtype.color,
+					}}
 				/>
 				<LogAdditional
 					onChange={onLogAdditionalChange}
 					editing={editing}
-					currSubType={log.subtypeId}
-					additionalText={log.additional}
+					currSubType={logState.subtypeId}
+					additionalText={logState.additional}
+					idx={idx}
 				/>
 				<LogTime
-					currSubType={log.subtypeId}
-					logTime={log.timestamp}
+					currSubType={logState.subtypeId}
+					logTime={logState.timestamp}
 					onChange={onLogTimeChange}
 					editing={editing}
-					timestamp={log.timestamp}
+					timestamp={logState.timestamp}
 				/>
 				<LogOptions
 					editing={editing}

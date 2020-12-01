@@ -64,7 +64,21 @@ module.exports = {
 			const type = await newType.save();
 			return type;
 		},
-		updateLogType: async (_, { name, color }, context) => {},
+		updateLogType: async (_, { id, name, color, enabled }, context) => {
+			const user = checkAuth(context);
+
+			try {
+				const type = await LogTypes.findByIdAndUpdate(
+					id,
+					{ name, color, enabled },
+					{ new: true }
+				);
+
+				return type;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 		deleteLogType: async (_, { typeId }, context) => {
 			const user = checkAuth(context);
 
@@ -89,7 +103,7 @@ module.exports = {
 
 					await type.delete();
 
-					return "Subtype data deleted!";
+					return "Type data deleted!";
 				} else {
 					throw new AuthenticationError("Action not allowed");
 				}

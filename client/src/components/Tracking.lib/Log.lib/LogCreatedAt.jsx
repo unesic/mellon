@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import moment from "moment";
 
-const LogCreatedAt = React.memo(({ editing, timestamp }) => {
+const LogCreatedAt = React.memo(({ editing, timestamp, idx }) => {
 	const short = useRef(
 		moment(new Date(parseInt(timestamp)).toISOString()).format("HH[:]mm")
 	);
@@ -15,7 +15,11 @@ const LogCreatedAt = React.memo(({ editing, timestamp }) => {
 	return !editing ? (
 		<div className="DailyTracking__CreatedAt TooltipContainer">
 			<div className="DailyTracking__CreatedAtShort">{short.current}</div>
-			<span className="DailyTracking__CreatedAtLong TooltipText">
+			<span
+				className={`DailyTracking__CreatedAtLong TooltipText ${
+					!idx ? "Bottom" : ""
+				}`}
+			>
 				{long.current}
 			</span>
 		</div>

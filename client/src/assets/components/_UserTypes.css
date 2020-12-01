@@ -1,0 +1,68 @@
+.UserTypes__Wrapper {
+	@apply;
+}
+
+.UserTypes__Container {
+	@apply rounded p-6 shadow-lg bg-white;
+}
+
+.UserTypes__TypeInner {
+	@apply flex items-center;
+}
+
+.UserTypes__TypesContainer {
+	@apply px-2;
+}
+
+.UserTypes__TypeContainer {
+	@apply mb-6;
+}
+
+.UserTypes__SubTypesContainer {
+	@apply flex items-center mt-2 px-2;
+}
+
+.UserTypes__TypeButton {
+	@apply rounded-2xl w-24 mr-2 py-1 px-3 border-none border-gray-900 bg-gray-500 shadow-md;
+	@apply text-white text-sm font-semibold text-left;
+	@apply cursor-pointer;
+}
+
+.UserTypes__TypeButton.Disabled {
+	filter: grayscale(1);
+	@apply cursor-not-allowed;
+}
+
+.UserTypes__MainContainer {
+	@apply	;
+}
+
+.UserTypes__TypeOptionsContainer {
+	@apply absolute z-10 bottom-0 transform translate-x-2 translate-y-full -mb-1.5;
+	@apply rounded bg-gray-700 px-2 py-1.5 shadow-md;
+	@apply flex;
+}
+
+.UserTypes__TypeOptionsContainer::before {
+	content: "";
+	@apply absolute top-0 transform translate-x-1 -translate-y-0.5 rotate-45;
+	@apply w-2 h-2 bg-gray-700 shadow-md;
+}
+
+.UserTypes__TypeOption {
+	@apply relative z-10 flex items-center;
+	@apply rounded px-2 text-base text-white;
+	@apply bg-gray-600;
+}
+
+.UserTypes__TypeOption svg {
+	@apply mr-1;
+}
+
+.UserTypes__TypeOption:not(:last-child) {
+	@apply mr-2;
+}
+
+.UserTypes__TypeOption:hover {
+	@apply bg-gray-500;
+}

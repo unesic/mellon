@@ -1,28 +1,28 @@
 /* Wrapping div */
 .DailyTracking__Wrapper {
-	@apply mb-4;
+	flex: 1 0 calc(100% - max(30%, 24rem));
 }
 
 /* Container */
 .DailyTracking__Container {
-	@apply rounded p-6 shadow-lg bg-white w-160 h-full;
+	@apply relative rounded p-6 shadow-lg bg-white h-full;
 }
 
-.DailyTracking__NewLogWrapper {
+.DailyTracking__InnerContainer {
 	@apply px-2;
+}
+
+.DailyTracking__InnerContainer:not(:first-child) {
+	@apply mt-4;
+}
+
+.DailyTracking__InnerContainer.LogsContainer {
+	height: clamp(10rem, calc(100% - 8.5rem), 50rem);
+	@apply relative;
 }
 
 .DailyTracking__NewLog {
 	@apply flex items-center px-2;
-}
-
-/* Title */
-.DailyTracking__Title {
-	@apply text-xl font-semibold text-gray-900 mb-1;
-}
-
-.DailyTracking__Title.Main {
-	@apply text-2xl font-bold mb-3;
 }
 
 .DailyTracking__FieldContainer {
@@ -34,7 +34,6 @@
 	-moz-appearance: none;
 	appearance: none;
 	text-indent: 1px;
-	@apply transition-all ease-in-out duration-200;
 	@apply rounded-2xl w-24 py-1 px-3 border-none border-gray-900 bg-gray-500 text-white shadow-md text-sm font-semibold;
 }
 
@@ -43,12 +42,16 @@
 }
 
 .DailyTracking__TextInput {
-	@apply transition-all ease-in-out duration-200;
 	@apply rounded-2xl w-16 py-1 px-3 border-none bg-gray-500 text-white shadow-md text-sm font-semibold;
 }
 
+.DailyTracking__TextInput.Wide,
 .DailyTracking__TextInput:focus {
 	@apply w-24;
+}
+
+.DailyTracking__TextInput.ExtraWide {
+	@apply w-32;
 }
 
 .DailyTracking__TextInput.HasValue {
@@ -71,17 +74,10 @@
 	@apply w-32;
 }
 
-.DailyTracking__Button {
-	@apply rounded-full bg-teal-400 p-2 shadow-md text-white text-lg;
-}
-
-.DailyTracking__LogsContainer {
-	@apply mt-4 px-2;
-}
-
 .DailyTracking__Logs {
-	max-height: 251px;
-	overflow: auto;
+	width: calc(100% - 1rem);
+	height: calc(100% - 2rem);
+	@apply absolute overflow-auto;
 }
 
 .DailyTracking__Logs::-webkit-scrollbar {
@@ -117,7 +113,6 @@
 }
 
 .DailyTracking__LogOptionsWrapper {
-	@apply transition-all ease-in-out duration-200;
 	@apply flex flex-grow justify-end opacity-0;
 }
 
@@ -127,7 +122,6 @@
 }
 
 .DailyTracking__LogOption {
-	@apply transition-all ease-in-out duration-200;
 	@apply rounded-full ml-2 p-1 text-gray-200 opacity-50;
 }
 

@@ -1,11 +1,11 @@
 /* Wrapping div */
 .Calendar__Wrapper {
-	@apply mr-4 mb-4;
+	@apply mb-4;
 }
 
 /* Container */
 .Calendar__Container {
-	@apply rounded p-6 shadow-lg bg-white w-112;
+	@apply rounded p-6 shadow-lg bg-white;
 }
 
 /* Navigation container */
@@ -63,7 +63,13 @@
 .Calendar__Tile.react-calendar__month-view__days__day {
 	flex-basis: calc(100% / 7 - 1rem) !important;
 	max-width: calc(100% / 7 - 1rem) !important;
-	@apply mr-4 mt-3 w-10 h-10 rounded-full text-sm;
+	@apply mr-4 mt-3 rounded-full text-sm;
+}
+
+.Calendar__Tile.react-calendar__month-view__days__day::after {
+	content: "";
+	display: block;
+	padding-bottom: 100%;
 }
 
 /* Month view - day - neighbor */
@@ -78,5 +84,5 @@
 }
 
 .Calendar__Tile.react-calendar__tile--now:not(.react-calendar__tile--active) {
-	@apply bg-teal-500;
+	@apply bg-teal-500 text-white;
 }

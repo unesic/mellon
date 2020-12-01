@@ -7,10 +7,11 @@ import { TrackingContext } from "lib/TrackingContext";
 import { CREATE_DAY } from "lib/graphql/day.queries";
 import { CREATE_LOG } from "lib/graphql/log.queries";
 
-const LogCreate = ({ date }) => {
+const LogCreate = () => {
 	const {
 		state: { currType, currSubType, logTime, dayData, additionalText },
 		dispatch,
+		currentDay: date,
 	} = useContext(TrackingContext);
 
 	const getVariables = (dayId = null) => {
@@ -88,7 +89,7 @@ const LogCreate = ({ date }) => {
 		currType &&
 		currSubType &&
 		logTime && (
-			<button className="DailyTracking__Button" onClick={addNewLog}>
+			<button className="PillButton" onClick={addNewLog}>
 				<MdAddCircle />
 			</button>
 		)

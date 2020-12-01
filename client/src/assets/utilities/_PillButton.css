@@ -1,0 +1,11 @@
+.PillButton {
+	@apply rounded-full bg-teal-400 p-2 shadow-md text-white text-lg;
+}
+
+.PillButton.TextWithIcon {
+	@apply flex items-center py-1 px-3 text-base font-semibold;
+}
+
+.PillButton.TextWithIcon svg {
+	@apply mr-1;
+}

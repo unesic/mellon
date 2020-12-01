@@ -54,62 +54,32 @@ const LogTime = React.memo(
 			setCustomTime(newTime);
 		};
 
-		// if (editing) {
-		// 	if (parent === "new" && state.currSubType && !notSameDay) {
-		// 		// display select
-		// 	}
-
-		// 	if (state.logTime === "custom" || notSameDay || !stateOptions.find((o) => o.value === state.logTime || (parent === "entry" && currSubType)) {
-		// 		// display timepicker
-		// 	}
-		// }
-
-		// {editing ? (
-		// 	<>
-		// 	{parent === "new" && state.currSubType && !notSameDay ? (<Select
-		// 		name="log_time"
-		// 		onChange={onChange}
-		// 		value={state.logTime}
-		// 		options={stateOptions}
-		// 		withLabel={false}
-		// 		styles={`DailyTracking__SelectInput Time ${
-		// 			state.logTime ? "HasValue" : ""
-		// 		}`}
-		// 	/>) : null}
-		// 	</>
-		// 	<>
-		// 	{state.logTime === "custom" || notSameDay || !stateOptions.find((o) => o.value === state.logTime || (parent === "entry" && currSubType) ? (<Timepicker
-		// 		value={customTime}
-		// 		onChange={onTimeChange}
-		// 		format="hh:mm a"
-		// 		className="TimePicker"
-		// 		clearIcon={null}
-		// 		disableClock
-		// 	/>) : null}
-		// 	</>
-		// ) : null}
-
 		return editing ? (
 			<>
-				<div className="DailyTracking__FieldContainer">
-					{parent === "new" && state.currSubType && !notSameDay ? (
+				{parent === "new" && state.currSubType && !notSameDay ? (
+					<div className="DailyTracking__FieldContainer">
 						<Select
 							name="log_time"
 							onChange={onChange}
 							value={state.logTime}
 							options={stateOptions}
 							withLabel={false}
-							styles={`DailyTracking__SelectInput Time ${
+							styles={`DailyTracking__SelectInput WithTransition Time ${
 								state.logTime ? "HasValue" : ""
 							} ${state.logTime === "custom" ? "Custom" : ""}`}
 						/>
-					) : null}
-				</div>
-				<div className="DailyTracking__FieldContainer">
-					{state.logTime === "custom" ||
-					notSameDay ||
-					!stateOptions.find((o) => o.value === state.logTime) ||
-					(parent === "entry" && currSubType) ? (
+					</div>
+				) : null}
+				{(state.currSubType &&
+					parent === "new" &&
+					state.currSubType &&
+					(state.logTime === "custom" ||
+						notSameDay ||
+						!stateOptions.find(
+							(o) => o.value === state.logTime
+						))) ||
+				(parent === "entry" && currSubType) ? (
+					<div className="DailyTracking__FieldContainer">
 						<Timepicker
 							value={customTime}
 							onChange={onTimeChange}
@@ -118,8 +88,8 @@ const LogTime = React.memo(
 							clearIcon={null}
 							disableClock
 						/>
-					) : null}
-				</div>
+					</div>
+				) : null}
 			</>
 		) : (
 			<div className="DailyTracking__FieldContainer">

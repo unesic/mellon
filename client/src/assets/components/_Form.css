@@ -44,6 +44,7 @@
 
 input:focus,
 select:focus,
+button:focus,
 .Form__Input:focus {
 	@apply outline-none shadow-outline-2;
 }

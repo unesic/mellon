@@ -1,0 +1,8 @@
+.Homepage {
+	@apply flex flex-wrap;
+}
+
+.Homepage__Inner {
+	flex-basis: clamp(24rem, 30%, 38rem);
+	@apply flex flex-col pr-4;
+}

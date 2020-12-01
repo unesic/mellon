@@ -17,6 +17,11 @@ const logSubTypesSchema = new Schema(
 			required: true,
 		},
 		color: String,
+		enabled: {
+			type: Boolean,
+			required: false,
+			default: true,
+		},
 	},
 	{
 		timestamps: true,

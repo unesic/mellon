@@ -10,6 +10,7 @@ const LogAdditional = React.memo(
 		editing = true,
 		currSubType = null,
 		additionalText = "",
+		idx,
 	}) => {
 		const { state } = useContext(TrackingContext);
 
@@ -21,7 +22,11 @@ const LogAdditional = React.memo(
 						<div className="DailyTracking__AdditionalText">
 							{additionalText}
 						</div>
-						<span className="DailyTracking__AdditionalTextInfo TooltipText">
+						<span
+							className={`DailyTracking__AdditionalTextInfo TooltipText ${
+								!idx ? "Bottom" : ""
+							}`}
+						>
 							{additionalText}
 						</span>
 					</div>
@@ -33,7 +38,7 @@ const LogAdditional = React.memo(
 						value={state.additionalText}
 						placeholder="Text"
 						withLabel={false}
-						styles={`DailyTracking__TextInput ${
+						styles={`DailyTracking__TextInput WithTransition ${
 							state.additionalText ? "HasValue" : ""
 						}`}
 					/>
@@ -45,7 +50,7 @@ const LogAdditional = React.memo(
 						value={additionalText}
 						placeholder="Text"
 						withLabel={false}
-						styles={`DailyTracking__TextInput ${
+						styles={`DailyTracking__TextInput WithTransition ${
 							additionalText ? "HasValue" : ""
 						}`}
 					/>

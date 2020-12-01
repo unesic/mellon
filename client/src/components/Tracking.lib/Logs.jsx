@@ -8,7 +8,7 @@ import { TrackingContext } from "lib/TrackingContext";
 
 const Logs = React.memo(() => {
 	const {
-		state: { dayData },
+		state: { dayData, logTypes, logSubTypes },
 		dispatch,
 	} = useContext(TrackingContext);
 	const [logs, setLogs] = useState([]);
@@ -41,7 +41,7 @@ const Logs = React.memo(() => {
 		} else {
 			setLogs([]);
 		}
-	}, [dayData]);
+	}, [dayData, logTypes, logSubTypes]);
 
 	const onDelete = (logId) => {
 		deleteLog({
@@ -57,11 +57,11 @@ const Logs = React.memo(() => {
 	};
 
 	return (
-		<div className="DailyTracking__LogsContainer">
-			<h1 className="DailyTracking__Title">All entries</h1>
+		<div className="DailyTracking__InnerContainer LogsContainer">
+			<h3 className="Title">All entries</h3>
 			<div className="DailyTracking__Logs">
-				{logs.map((log) => (
-					<Log key={log.id} log={log} onDelete={onDelete} />
+				{logs.map((log, idx) => (
+					<Log key={log.id} idx={idx} log={log} onDelete={onDelete} />
 				))}
 			</div>
 		</div>

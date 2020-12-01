@@ -63,7 +63,21 @@ module.exports = {
 
 			return subtype;
 		},
-		updateLogSubType: async (_, { name, color }, context) => {},
+		updateLogSubType: async (_, { id, name, color, enabled }, context) => {
+			const user = checkAuth(context);
+
+			try {
+				const subtype = await LogSubTypes.findByIdAndUpdate(
+					id,
+					{ name, color, enabled },
+					{ new: true }
+				);
+
+				return subtype;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 		deleteLogSubType: async (_, { subtypeId }, context) => {
 			const user = checkAuth(context);
 

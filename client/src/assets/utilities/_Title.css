@@ -1,0 +1,7 @@
+.Title {
+	@apply text-xl font-semibold text-gray-900 mb-1;
+}
+
+.Title__Main {
+	@apply text-2xl font-bold mb-3;
+}

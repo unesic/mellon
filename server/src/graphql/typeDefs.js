@@ -14,6 +14,7 @@ module.exports = gql`
 		typeId: ID!
 		name: String!
 		color: String
+		enabled: Boolean
 	}
 
 	type LogType {
@@ -22,6 +23,7 @@ module.exports = gql`
 		name: String!
 		subtypes: [ID]!
 		color: String
+		enabled: Boolean
 	}
 
 	type Log {
@@ -126,14 +128,21 @@ module.exports = gql`
 
 		createLogType(name: String!, color: String): LogType!
 		updateLogType(
+			id: ID!
 			name: String
 			color: String
+			enabled: Boolean
 			subtypes: [String!]
 		): LogType!
 		deleteLogType(typeId: ID!): String!
 
 		createLogSubType(typeId: ID!, name: String!, color: String): LogSubType!
-		updateLogSubType(name: String!, color: String): LogSubType!
+		updateLogSubType(
+			id: ID!
+			name: String
+			color: String
+			enabled: Boolean
+		): LogSubType!
 		deleteLogSubType(subtypeId: ID!): String!
 
 		singleUpload(file: Upload!): File!

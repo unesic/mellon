@@ -8,8 +8,8 @@ import LogTime from "./Log.lib/LogTime";
 import LogAdditional from "./Log.lib/LogAdditional";
 import LogCreate from "./Log.lib/LogCreate";
 
-const NewLog = React.memo(({ date }) => {
-	const { dispatch } = useContext(TrackingContext);
+const NewLog = React.memo(() => {
+	const { state, dispatch, currentDay: date } = useContext(TrackingContext);
 
 	const setCurrType = (e) => {
 		if (e.target.value) {
@@ -50,8 +50,8 @@ const NewLog = React.memo(({ date }) => {
 	);
 
 	return (
-		<div className="DailyTracking__NewLogWrapper">
-			<h2 className="DailyTracking__Title">Add a new entry</h2>
+		<div className="DailyTracking__InnerContainer">
+			<h3 className="Title">Add a new entry</h3>
 
 			<div className="DailyTracking__NewLog">
 				<LogType parent="new" onChange={setCurrType} />
@@ -62,8 +62,9 @@ const NewLog = React.memo(({ date }) => {
 					onChange={setLogTime}
 					notSameDay={!isDateSameMemo}
 				/>
-				<LogCreate date={date} />
+				<LogCreate />
 			</div>
+			{/* <pre className="text-xs">{JSON.stringify(state, null, 2)}</pre> */}
 		</div>
 	);
 });
