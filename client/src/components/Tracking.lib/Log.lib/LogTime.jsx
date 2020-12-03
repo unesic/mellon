@@ -13,11 +13,9 @@ const LogTime = React.memo(
 		onChange,
 		editing = true,
 		timestamp = "",
-		notSameDay = false,
+		isSameDay = true,
 	}) => {
-		const { state, dispatch, options: stateOptions } = useContext(
-			TrackingContext
-		);
+		const { state, dispatch, options } = useContext(TrackingContext);
 		const [customTime, setCustomTime] = useState("");
 
 		useEffect(() => {
@@ -30,10 +28,10 @@ const LogTime = React.memo(
 				}${minutes}`;
 				setCustomTime(formatted);
 			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
 		const onTimeChange = (newTime) => {
-			console.log("onTimeChange");
 			if (newTime) {
 				const [hours, minutes] = newTime.split(":");
 				const parsed = moment(new Date())
@@ -41,14 +39,12 @@ const LogTime = React.memo(
 					.minutes(minutes)
 					.toISOString();
 
-				if (parent === "new") {
+				if (parent === "new")
 					dispatch({
 						type: "SET_TIME",
 						payload: parsed,
 					});
-				} else {
-					onChange(parsed);
-				}
+				else onChange(parsed);
 			}
 
 			setCustomTime(newTime);
@@ -56,28 +52,26 @@ const LogTime = React.memo(
 
 		return editing ? (
 			<>
-				{parent === "new" && state.currSubType && !notSameDay ? (
+				{parent === "new" && state.currSubType && isSameDay ? (
 					<div className="DailyTracking__FieldContainer">
 						<Select
 							name="log_time"
 							onChange={onChange}
 							value={state.logTime}
-							options={stateOptions}
+							options={options}
 							withLabel={false}
-							styles={`DailyTracking__SelectInput WithTransition Time ${
-								state.logTime ? "HasValue" : ""
-							} ${state.logTime === "custom" ? "Custom" : ""}`}
+							noDefaultOption
+							styles={`Time ${state.logTime ? "HasValue" : ""} ${
+								state.logTime === "custom" ? "Custom" : ""
+							}`}
 						/>
 					</div>
 				) : null}
-				{(state.currSubType &&
-					parent === "new" &&
+				{(parent === "new" &&
 					state.currSubType &&
 					(state.logTime === "custom" ||
-						notSameDay ||
-						!stateOptions.find(
-							(o) => o.value === state.logTime
-						))) ||
+						!isSameDay ||
+						!options.find((o) => o.id === state.logTime))) ||
 				(parent === "entry" && currSubType) ? (
 					<div className="DailyTracking__FieldContainer">
 						<Timepicker

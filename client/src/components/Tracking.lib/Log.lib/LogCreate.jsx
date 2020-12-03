@@ -85,15 +85,11 @@ const LogCreate = () => {
 		}
 	};
 
-	return (
-		currType &&
-		currSubType &&
-		logTime && (
-			<button className="PillButton" onClick={addNewLog}>
-				<MdAddCircle />
-			</button>
-		)
-	);
+	return currType && currSubType && logTime ? (
+		<button className="PillButton" onClick={addNewLog}>
+			<MdAddCircle />
+		</button>
+	) : null;
 };
 
 export default LogCreate;

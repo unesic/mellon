@@ -22576,6 +22576,109 @@ video {
   margin-right: 0.25rem;
 }
 
+.WithTransition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.Select__Wrapper {
+  position: relative;
+}
+
+.Select__ToggleBtn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: left;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  border-radius: 1rem;
+  min-width: 6rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  --bg-opacity: 1;
+  background-color: #a0aec0;
+  background-color: rgba(160, 174, 192, var(--bg-opacity));
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.Select__ToggleBtn.HasValue {
+  --bg-opacity: 1;
+  background-color: #4fd1c5;
+  background-color: rgba(79, 209, 197, var(--bg-opacity));
+}
+
+.Select__ToggleBtn.Time:not(.Custom) {
+  width: 8rem;
+}
+
+.Select__DropdownContainer {
+  position: absolute;
+  z-index: 10;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  min-width: 10rem;
+  --bg-opacity: 1;
+  background-color: #cbd5e0;
+  background-color: rgba(203, 213, 224, var(--bg-opacity));
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --transform-translate-x: 0;
+  --transform-translate-y: 0;
+  --transform-rotate: 0;
+  --transform-skew-x: 0;
+  --transform-skew-y: 0;
+  --transform-scale-x: 1;
+  --transform-scale-y: 1;
+  transform: translateX(var(--transform-translate-x)) translateY(var(--transform-translate-y)) rotate(var(--transform-rotate)) skewX(var(--transform-skew-x)) skewY(var(--transform-skew-y)) scaleX(var(--transform-scale-x)) scaleY(var(--transform-scale-y));
+  --transform-translate-x: 0.5rem;
+  --transform-translate-y: 0.5rem;
+}
+
+.Select__DropdownInner {
+}
+
+.Select__DropdownItems {
+}
+
+.Select__DropdownItem {
+}
+
+.Select__DropdownItemInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  width: 100%;
+  text-align: left;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+}
+
+.Select__DropdownItemInner:hover,
+.Select__DropdownItemInner.Selected {
+  --bg-opacity: 1;
+  background-color: #718096;
+  background-color: rgba(113, 128, 150, var(--bg-opacity));
+}
+
+.Select__DropdownItemInner.Selected {
+  font-weight: 600;
+}
+
+.Select__DropdownItemInner.Selected svg {
+  --text-opacity: 1;
+  color: #4fd1c5;
+  color: rgba(79, 209, 197, var(--text-opacity));
+}
+
 .container {
   width: 100%;
 }
@@ -22689,6 +22792,13 @@ video {
   --border-opacity: 1;
   border-color: #e2e8f0;
   border-color: rgba(226, 232, 240, var(--border-opacity));
+  box-shadow: none;
+  width: 100%;
+  font-weight: 400;
+  --text-opacity: 1;
+  color: #1a202c;
+  color: rgba(26, 32, 44, var(--text-opacity));
+  font-size: 1rem;
 }
 
 input:focus,
@@ -23231,37 +23341,6 @@ button:focus,
   padding-bottom: 0.1875rem;
 }
 
-.DailyTracking__SelectInput {
-  -webkit-appearance: none;
-  appearance: none;
-  text-indent: 1px;
-  border-radius: 1rem;
-  width: 6rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  border-style: none;
-  --border-opacity: 1;
-  border-color: #1a202c;
-  border-color: rgba(26, 32, 44, var(--border-opacity));
-  --bg-opacity: 1;
-  background-color: #a0aec0;
-  background-color: rgba(160, 174, 192, var(--bg-opacity));
-  --text-opacity: 1;
-  color: #fff;
-  color: rgba(255, 255, 255, var(--text-opacity));
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.DailyTracking__SelectInput.HasValue {
-  --bg-opacity: 1;
-  background-color: #4fd1c5;
-  background-color: rgba(79, 209, 197, var(--bg-opacity));
-}
-
 .DailyTracking__TextInput {
   border-radius: 1rem;
   width: 4rem;
@@ -23302,19 +23381,15 @@ button:focus,
   color: rgba(226, 232, 240, var(--text-opacity));
 }
 
-.DailyTracking__AdditionalTextContainer {
+.DailyTracking__TextContainer {
 }
 
-.DailyTracking__AdditionalText {
+.DailyTracking__Text {
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 8rem;
-}
-
-.DailyTracking__SelectInput.Time:not(.Custom) {
-  width: 8rem;
 }
 
 .DailyTracking__Logs {
@@ -23504,6 +23579,7 @@ button:focus,
 
 .UserTypes__SubTypesContainer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: 0.5rem;
   padding-left: 0.5rem;

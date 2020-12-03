@@ -5,6 +5,8 @@
 @import "./utilities/_Tooltip.css";
 @import "./utilities/_Title.css";
 @import "./utilities/_PillButton.css";
+@import "./utilities/_Transition.css";
+@import "./utilities/_Select.css";
 
 @import "tailwindcss/components";
 @import "./components/_Form.css";

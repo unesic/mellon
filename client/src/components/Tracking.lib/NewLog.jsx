@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import moment from "moment";
 
 import { TrackingContext } from "lib/TrackingContext";
@@ -8,8 +8,8 @@ import LogTime from "./Log.lib/LogTime";
 import LogAdditional from "./Log.lib/LogAdditional";
 import LogCreate from "./Log.lib/LogCreate";
 
-const NewLog = React.memo(() => {
-	const { state, dispatch, currentDay: date } = useContext(TrackingContext);
+const NewLog = () => {
+	const { state, dispatch, currentDay } = useContext(TrackingContext);
 
 	const setCurrType = (e) => {
 		if (e.target.value) {
@@ -45,28 +45,41 @@ const NewLog = React.memo(() => {
 		});
 	};
 
-	const isDateSameMemo = useMemo(
-		() => moment().diff(date.toISOString(), "days") === 0
-	);
-
 	return (
 		<div className="DailyTracking__InnerContainer">
 			<h3 className="Title">Add a new entry</h3>
 
 			<div className="DailyTracking__NewLog">
-				<LogType parent="new" onChange={setCurrType} />
-				<LogSubType parent="new" onChange={setCurrSubType} />
-				<LogAdditional parent="new" onChange={setLogAdditional} />
+				<LogType
+					type={state.currType}
+					types={state.logTypes}
+					change={setCurrType}
+					editing={true}
+				/>
+				<LogSubType
+					type={state.currType}
+					subtype={state.currSubType}
+					subtypes={state.logSubTypes}
+					change={setCurrSubType}
+					editing={true}
+				/>
+				<LogAdditional
+					change={setLogAdditional}
+					subtype={state.currSubType}
+					text={state.additionalText}
+					editing={true}
+				/>
 				<LogTime
 					parent="new"
 					onChange={setLogTime}
-					notSameDay={!isDateSameMemo}
+					isSameDay={
+						moment().diff(currentDay.toISOString(), "days") === 0
+					}
 				/>
 				<LogCreate />
 			</div>
-			{/* <pre className="text-xs">{JSON.stringify(state, null, 2)}</pre> */}
 		</div>
 	);
-});
+};
 
 export default NewLog;

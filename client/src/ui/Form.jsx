@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
+import { HiCheckCircle } from "react-icons/hi";
+import useVisible from "lib/hooks/useVisible";
 
 export const FContainer = React.memo(({ formType = "", children }) => {
 	return (
@@ -154,31 +156,91 @@ export const Select = React.memo(
 		style = {},
 		noDefaultOption = false,
 	}) => {
+		const [selected, setSelected] = useState(null);
+		const [selectName, setSelectName] = useState(null);
+		const { ref, isVisible, setIsVisible } = useVisible(false);
+
+		useEffect(() => {
+			setSelected(value || placeholder);
+			const o = options.find((o) => o.id === (value || placeholder));
+			setSelectName(o ? o.name : null);
+		}, [value]);
+
+		const onClickHandler = (e) => {
+			const { target: child } = e;
+			const { parentNode: parent } = child;
+			const { value: cValue, name: cName } = child.dataset;
+			const { value: pValue, name: pName } = parent.dataset;
+
+			setSelected(cValue || pValue || "");
+			setSelectName(cName || pName || "");
+			onChange({ target: { name, value: cValue || pValue || "" } });
+			setIsVisible(false);
+		};
+
 		return (
 			<>
 				{withLabel && <Label htmlFor={name}>{label}</Label>}
-				<select
-					name={name}
-					id={name}
-					value={value || placeholder}
-					onChange={onChange}
-					className={`${"Form__Input"} ${
-						value === "" ? "Form__SelectPlaceholder" : ""
-					} ${styles ? styles : ""}`.trim()}
-					style={{ ...style }}
-				>
-					{!noDefaultOption ? (
-						<option value="">
-							{placeholder || "Select one..."}
-						</option>
-					) : null}
+				<div className="Select__Wrapper" ref={ref}>
+					<button
+						type="button"
+						className={`Select__ToggleBtn WithTransition ${
+							value === "" ? "Form__SelectPlaceholder" : ""
+						} ${styles ? styles : ""}`.trim()}
+						style={{ ...style }}
+						onClick={() => setIsVisible(!isVisible)}
+					>
+						{selectName || placeholder}
+					</button>
+					{isVisible ? (
+						<div className="Select__DropdownContainer">
+							<div className="Select__DropdownInner">
+								<div className="Select__DropdownItems">
+									{!noDefaultOption ? (
+										<div className="Select__DropdownItem">
+											<button
+												type="button"
+												className="Select__DropdownItemInner WithTransition"
+												data-value=""
+												data-name=""
+												onClick={onClickHandler}
+											>
+												{placeholder || "Select one..."}
+											</button>
+										</div>
+									) : null}
 
-					{options.map((o) => (
-						<option value={o.value || o.id} key={o.value || o.id} disabled={!o.enabled || false}>
-							{o.label || o.name}
-						</option>
-					))}
-				</select>
+									{options.map(({ id, name }) => {
+										const isSelected = selected === id;
+
+										return (
+											<div
+												className="Select__DropdownItem"
+												key={id}
+											>
+												<button
+													className={`Select__DropdownItemInner WithTransition ${
+														isSelected
+															? "Selected"
+															: ""
+													}`.trim()}
+													data-value={id}
+													data-name={name}
+													onClick={onClickHandler}
+												>
+													<span>{name}</span>
+													{isSelected ? (
+														<HiCheckCircle />
+													) : null}
+												</button>
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						</div>
+					) : null}
+				</div>
 				{error && <Error>{error}</Error>}
 			</>
 		);

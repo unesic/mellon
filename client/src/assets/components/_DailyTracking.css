@@ -29,18 +29,6 @@
 	@apply mr-2 py-0.75;
 }
 
-.DailyTracking__SelectInput {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	text-indent: 1px;
-	@apply rounded-2xl w-24 py-1 px-3 border-none border-gray-900 bg-gray-500 text-white shadow-md text-sm font-semibold;
-}
-
-.DailyTracking__SelectInput.HasValue {
-	@apply bg-teal-400;
-}
-
 .DailyTracking__TextInput {
 	@apply rounded-2xl w-16 py-1 px-3 border-none bg-gray-500 text-white shadow-md text-sm font-semibold;
 }
@@ -62,16 +50,12 @@
 	@apply text-gray-300;
 }
 
-.DailyTracking__AdditionalTextContainer {
+.DailyTracking__TextContainer {
 	@apply;
 }
 
-.DailyTracking__AdditionalText {
+.DailyTracking__Text {
 	@apply font-bold truncate max-w-4xs;
-}
-
-.DailyTracking__SelectInput.Time:not(.Custom) {
-	@apply w-32;
 }
 
 .DailyTracking__Logs {

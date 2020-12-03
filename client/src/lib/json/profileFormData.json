@@ -14,16 +14,16 @@
 			"type": "select",
 			"options": [
 				{
-					"label": "Male",
-					"value": "male"
+					"id": "male",
+					"name": "Male"
 				},
 				{
-					"label": "Female",
-					"value": "female"
+					"id": "female",
+					"name": "Female"
 				},
 				{
-					"label": "Other",
-					"value": "other"
+					"id": "other",
+					"name": "Other"
 				}
 			],
 			"name": "gender",
@@ -34,24 +34,24 @@
 			"type": "select",
 			"options": [
 				{
-					"label": "18-25",
-					"value": "18-25"
+					"id": "18-25",
+					"name": "18-25"
 				},
 				{
-					"label": "25-35",
-					"value": "25-35"
+					"id": "25-35",
+					"name": "25-35"
 				},
 				{
-					"label": "35-55",
-					"value": "35-55"
+					"id": "35-55",
+					"name": "35-55"
 				},
 				{
-					"label": "55+",
-					"value": "55+"
+					"id": "55+",
+					"name": "55+"
 				},
 				{
-					"label": "Other",
-					"value": "other"
+					"id": "other",
+					"name": "Other"
 				}
 			],
 			"name": "age",

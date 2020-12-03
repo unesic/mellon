@@ -1,97 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { TrackingContext } from "lib/TrackingContext";
 import { Select } from "ui/Form";
 
-const LogType = React.memo(
-	({
-		parent = "entry",
-		currType = null,
-		logTypes = [],
-		onChange,
-		editing = true,
-		data = {},
-	}) => {
-		const { state } = useContext(TrackingContext);
+const LogType = ({ type, types, change, editing, data }) => {
+	const [color, setColor] = useState("");
 
-		const [types, setTypes] = useState([]);
-		const [color, setColor] = useState("");
+	useEffect(() => {
+		if (types && types.length && type)
+			setColor(types.find((t) => t.id === type).color);
+		else setColor("");
+	}, [type, types]);
 
-		useEffect(() => {
-			if (parent === "new") setTypes(state.logTypes);
-		}, [state.logTypes]);
-
-		useEffect(() => {
-			if (parent === "entry" && logTypes.length) setTypes(logTypes);
-		}, [logTypes]);
-
-		useEffect(() => {
-			if (parent === "new") {
-				if (types.length && state.currType) {
-					const { color } = types.find(
-						(type) => type.id === state.currType
-					);
-					setColor(color);
-				} else {
-					setColor("");
-				}
-			}
-		}, [types, state.currType]);
-
-		useEffect(() => {
-			if (parent === "entry") {
-				if (types.length && currType) {
-					const { color } = types.find(
-						(type) => type.id === currType
-					);
-					setColor(color);
-				} else {
-					setColor("");
-				}
-			}
-		}, [types, currType]);
-
-		return (
-			<div className="DailyTracking__FieldContainer">
-				{editing ? (
-					parent === "new" ? (
-						<Select
-							name="log_type"
-							onChange={onChange}
-							value={state.currType}
-							placeholder="Type"
-							options={types}
-							withLabel={false}
-							styles={`DailyTracking__SelectInput WithTransition ${
-								state.currType ? "HasValue" : ""
-							}`}
-							style={{ backgroundColor: color ? color : null }}
-						/>
-					) : (
-						<Select
-							name="log_type"
-							onChange={onChange}
-							value={currType}
-							placeholder="Type"
-							options={types}
-							withLabel={false}
-							styles={`DailyTracking__SelectInput WithTransition ${
-								currType ? "HasValue" : ""
-							}`}
-							style={{ backgroundColor: color ? color : null }}
-						/>
-					)
-				) : (
+	return (
+		<div className="DailyTracking__FieldContainer">
+			{editing ? (
+				<Select
+					name="log_type"
+					onChange={change}
+					value={type}
+					placeholder="Type"
+					options={types}
+					withLabel={false}
+					styles={type ? "HasValue" : ""}
+					style={{ backgroundColor: color }}
+					noDefaultOption
+				/>
+			) : (
+				data && (
 					<div
-						className="DailyTracking__SelectInput WithTransition"
+						className="Select__ToggleBtn"
 						style={{ backgroundColor: data.color || null }}
 					>
 						{data.name}
 					</div>
-				)}
-			</div>
-		);
-	}
-);
+				)
+			)}
+		</div>
+	);
+};
 
 export default LogType;

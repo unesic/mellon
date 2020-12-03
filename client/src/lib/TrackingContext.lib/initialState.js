@@ -5,7 +5,7 @@ export const initialState = {
 	logSubTypes: [],
 	currType: null,
 	currSubType: null,
-	logTime: options[0].value,
+	logTime: options[0].id,
 	dayData: {},
 	additionalText: "",
 };

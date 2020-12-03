@@ -16,14 +16,11 @@ const Profile = ({ history, location }) => {
 		const { formFields } = formDataRef.current;
 		const newFormFields = formFields
 			.map((f) => {
-				if (context.user[f.name]) {
-					f.placeholder = context.user[f.name];
-				}
-
+				if (context.user[f.name]) f.placeholder = context.user[f.name];
 				return f;
 			})
 			.filter(Boolean);
-			
+
 		formDataRef.current.formFields = [...newFormFields];
 	}, [context.user]);
 

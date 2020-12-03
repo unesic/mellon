@@ -1,0 +1,50 @@
+.Select__Wrapper {
+	@apply relative;
+}
+
+.Select__ToggleBtn {
+	@apply text-sm font-semibold text-left text-white;
+	@apply rounded-2xl min-w-24 py-1 px-3 bg-gray-500 shadow-md;
+}
+
+.Select__ToggleBtn.HasValue {
+	@apply bg-teal-400;
+}
+
+.Select__ToggleBtn.Time:not(.Custom) {
+	@apply w-32;
+}
+
+.Select__DropdownContainer {
+	@apply absolute z-10 p-1 rounded min-w-40 bg-gray-400 shadow-md;
+	@apply transform translate-x-2 translate-y-2;
+}
+
+.Select__DropdownInner {
+	@apply;
+}
+
+.Select__DropdownItems {
+	@apply;
+}
+
+.Select__DropdownItem {
+	@apply;
+}
+
+.Select__DropdownItemInner {
+	@apply flex justify-between items-center rounded px-2 py-1 w-full text-left text-white;
+}
+
+.Select__DropdownItemInner:hover,
+.Select__DropdownItemInner.Selected {
+	@apply bg-gray-600;
+}
+
+.Select__DropdownItemInner.Selected {
+	@apply font-semibold;
+}
+
+.Select__DropdownItemInner.Selected svg {
+	@apply text-teal-400;
+}

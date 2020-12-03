@@ -59,14 +59,15 @@ const useForm = (
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formFields, context.image]);
 
+	const onChange = (e) => {
+		lib.onChangeHandler(e, dispatchFormState);
+	};
+
 	const getFields = () => {
 		const mostCommonTypes = ["text", "password", "number", "checkbox"];
 
 		const fields = Object.keys(formState).map((key) => {
 			const { name, width, type, label, error } = formState[key];
-			const onChange = (e) => {
-				lib.onChangeHandler(e, dispatchFormState);
-			};
 
 			if (mostCommonTypes.includes(type)) {
 				return (
@@ -94,7 +95,12 @@ const useForm = (
 			} else if (type === "select") {
 				return (
 					<F.Fieldset key={name} width={width}>
-						<F.Select {...formState[key]} onChange={onChange} />
+						<F.Select
+							{...formState[key]}
+							noDefaultOption
+							onChange={onChange}
+							styles="Form__Input"
+						/>
 					</F.Fieldset>
 				);
 			} else {

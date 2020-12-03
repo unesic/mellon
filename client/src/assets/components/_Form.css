@@ -39,7 +39,7 @@
 }
 
 .Form__Input {
-	@apply rounded py-1 px-2 bg-white border border-solid border-gray-300;
+	@apply rounded py-1 px-2 bg-white border border-solid border-gray-300 shadow-none w-full font-normal text-gray-900 text-base;
 }
 
 input:focus,
