@@ -22,7 +22,7 @@ const Navigation = React.memo(() => {
 						<NavLink
 							to="/"
 							exact
-							className="Navigation__NavLink Navigation__NavLinkInProgress"
+							className="Navigation__NavLink Navigation__NavLinkDone"
 							activeClassName="Navigation__NavLinkActive"
 						>
 							Daily tracking
@@ -30,7 +30,7 @@ const Navigation = React.memo(() => {
 						<NavLink
 							to="/analytics"
 							exact
-							className="Navigation__NavLink Navigation__NavLinkNotDone"
+							className="Navigation__NavLink Navigation__NavLinkInProgress"
 							activeClassName="Navigation__NavLinkActive"
 						>
 							Analytics dashboard

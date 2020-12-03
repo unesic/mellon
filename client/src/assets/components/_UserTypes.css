@@ -23,7 +23,7 @@
 }
 
 .UserTypes__TypeButton {
-	@apply rounded-2xl w-24 mr-2 py-1 px-3 border-none border-gray-900 bg-gray-500 shadow-md;
+	@apply rounded-2xl mr-2 py-1 px-3 border-none border-gray-900 bg-gray-500 shadow-md min-w-24;
 	@apply text-white text-sm font-semibold text-left;
 	@apply cursor-pointer;
 }

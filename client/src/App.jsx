@@ -1,10 +1,14 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import Navigation from "ui/Navigation";
+
 import PrivateRoute from "lib/PrivateRoute";
 import PublicRoute from "lib/PublicRoute";
+
 import Homepage from "views/Homepage";
+import Analytics from "views/Analytics";
+
 import Register from "views/Register";
 import Login from "views/Login";
 import Logout from "views/Logout";
@@ -19,6 +23,11 @@ const App = () => {
 			<main className="Main__Wrapper">
 				<Switch>
 					<PrivateRoute exact path="/" component={Homepage} />
+					<PrivateRoute
+						exact
+						path="/analytics"
+						component={Analytics}
+					/>
 					<PublicRoute path="/register" component={Register} />
 					<PublicRoute path="/login" component={Login} />
 					<PrivateRoute path="/logout" component={Logout} />

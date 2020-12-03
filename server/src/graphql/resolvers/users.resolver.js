@@ -7,6 +7,7 @@ const {
 	validateLoginInput,
 	validateUpdateInput,
 } = require("../../util/validators");
+const checkAuth = require("../../util/check-auth");
 const Users = require("../../models/Users.model");
 
 const generateToken = (user, remember) => {

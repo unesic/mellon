@@ -1,0 +1,12 @@
+[
+	{
+		"name": "a",
+		"value": 1,
+		"value2": 2
+	},
+	{
+		"name": "b",
+		"value": 3,
+		"value2": 4
+	}
+]

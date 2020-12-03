@@ -11,7 +11,7 @@ if (localStorage.getItem("auth-token")) {
 	const decoded = jwtDecode(localStorage.getItem("auth-token"));
 
 	if (decoded.exp * 1000 < Date.now()) {
-		window.localStorage.removeItem("auth-token");
+		localStorage.removeItem("auth-token");
 	} else {
 		initialState.user = decoded;
 	}
@@ -21,6 +21,7 @@ const AuthContext = createContext(contextState);
 
 const AuthProvider = (props) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
+
 	const [getFile] = useLazyQuery(GET_FILE, {
 		onCompleted({ getFile: imageData }) {
 			dispatch({
@@ -61,7 +62,7 @@ const AuthProvider = (props) => {
 			payload: userData,
 		});
 
-		window.localStorage.setItem("auth-token", userData.token);
+		localStorage.setItem("auth-token", userData.token);
 	};
 
 	const logout = () => {
@@ -69,7 +70,7 @@ const AuthProvider = (props) => {
 			type: "LOGOUT",
 		});
 
-		window.localStorage.removeItem("auth-token");
+		localStorage.removeItem("auth-token");
 	};
 
 	return (

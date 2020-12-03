@@ -1,0 +1,170 @@
+[
+	{
+		"label": "Monday",
+		"idx": 0,
+		"types": [
+			{
+				"name": "Type 1",
+				"color": "red",
+				"id": "type-1",
+				"num": 36,
+				"subtypes": [
+					{
+						"name": "Subtype 1",
+						"id": "11",
+						"color": "#4fd1c5",
+						"num": 11
+					},
+					{
+						"name": "Subtype 2",
+						"id": "12",
+						"color": "#718096",
+						"num": 12
+					},
+					{
+						"name": "Subtype 3",
+						"id": "13",
+						"color": "#f6ad55",
+						"num": 13
+					}
+				]
+			},
+			{
+				"name": "Type 2",
+				"color": "green",
+				"id": "type-2",
+				"num": 45,
+				"subtypes": [
+					{
+						"name": "Subtype 4",
+						"id": "21",
+						"color": "#4fd1c5",
+						"num": 14
+					},
+					{
+						"name": "Subtype 5",
+						"id": "22",
+						"color": "#718096",
+						"num": 15
+					},
+					{
+						"name": "Subtype 6",
+						"id": "23",
+						"color": "#f6ad55",
+						"num": 16
+					}
+				]
+			},
+			{
+				"name": "Type 3",
+				"color": "blue",
+				"id": "type-3",
+				"num": 54,
+				"subtypes": [
+					{
+						"name": "Subtype 7",
+						"id": "31",
+						"color": "#4fd1c5",
+						"num": 17
+					},
+					{
+						"name": "Subtype 8",
+						"id": "32",
+						"color": "#718096",
+						"num": 18
+					},
+					{
+						"name": "Subtype 9",
+						"id": "33",
+						"color": "#f6ad55",
+						"num": 19
+					}
+				]
+			}
+		]
+	},
+	{
+		"label": "Tuesday",
+		"idx": 1,
+		"types": [
+			{
+				"name": "Type 1",
+				"color": "red",
+				"id": "type-1",
+				"num": 36,
+				"subtypes": [
+					{
+						"name": "Subtype 1",
+						"id": "11",
+						"color": "#4fd1c5",
+						"num": 11
+					},
+					{
+						"name": "Subtype 2",
+						"id": "12",
+						"color": "#718096",
+						"num": 12
+					},
+					{
+						"name": "Subtype 3",
+						"id": "13",
+						"color": "#f6ad55",
+						"num": 13
+					}
+				]
+			},
+			{
+				"name": "Type 2",
+				"color": "green",
+				"id": "type-2",
+				"num": 45,
+				"subtypes": [
+					{
+						"name": "Subtype 4",
+						"id": "21",
+						"color": "#4fd1c5",
+						"num": 14
+					},
+					{
+						"name": "Subtype 5",
+						"id": "22",
+						"color": "#718096",
+						"num": 15
+					},
+					{
+						"name": "Subtype 6",
+						"id": "23",
+						"color": "#f6ad55",
+						"num": 16
+					}
+				]
+			},
+			{
+				"name": "Type 3",
+				"color": "blue",
+				"id": "type-3",
+				"num": 54,
+				"subtypes": [
+					{
+						"name": "Subtype 7",
+						"id": "31",
+						"color": "#4fd1c5",
+						"num": 17
+					},
+					{
+						"name": "Subtype 8",
+						"id": "32",
+						"color": "#718096",
+						"num": 18
+					},
+					{
+						"name": "Subtype 9",
+						"id": "33",
+						"color": "#f6ad55",
+						"num": 19
+					}
+				]
+			}
+		]
+	}
+]

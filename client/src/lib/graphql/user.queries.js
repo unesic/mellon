@@ -90,4 +90,4 @@ const USER_UPDATE = gql`
 	}
 `;
 
-export { USER_LOGIN, USER_REGISTER, USER_UPDATE };
+export { USER_REGISTER, USER_LOGIN, USER_UPDATE };

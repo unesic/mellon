@@ -94,7 +94,7 @@ const TypeButton = ({
 					onClick={() => setOptionsVisible(!optionsVisible)}
 					className={`UserTypes__TypeButton ${
 						!enabled || !parentEnabled ? "Disabled" : ""
-					}`}
+					}`.trim()}
 					style={{ backgroundColor: color }}
 				>
 					{name}
